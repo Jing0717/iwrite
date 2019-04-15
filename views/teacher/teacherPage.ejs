@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<% include API/header %>
+    <script type="text/javascript" src="https://rawgit.com/caolan/async/master/dist/async.min.js"></script>
+
+    <body>
+        <div class="container">
+            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">上傳文本</button>
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">選擇PDF檔上傳資料庫</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="fileupload" method="POST" enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <label for="article_subject">文章標題:</label>
+                                    <input type="search" name="article_subject" id="article_subject">
+                                </div>
+                                <div class="form-group">
+                                    <label for="article_type">文章來源:</label>
+                                    <select name="article_type" id="article_type">
+                                        <option value="小論文" selected="selected">小論文</option>
+                                        <option value="書籍">書籍</option>
+                                        <option value="網路">網路</option>
+                                    </select>
+                                </div>
+                                <input type="file" name="filetoupload" multiple>
+                                <input type="submit" value="提交">
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="warp">
+                <div class="headings">
+                    <h2>文本資料庫</h2>
+                </div>
+                <div class="contentbox">
+                    <table width="100%">
+                        <tr>
+                            <th align="left">文章來源</th>
+                            <th align="left">標題</th>
+                            <th align="left">時間</th>
+                            <th align="left">編輯</th>
+                        </tr>
+                        <% if(data.length == 0) { %>
+                            <div class="status warning">
+                                <p>
+                                    <img src="images/icon_warning.png" alt="Warning" />
+                                    <span>注意</span> 目前範本資料庫中沒有任何資料！</p>
+                            </div>
+                            <% } else { %>
+                                <% for(var i=0; i<data.length; i++) { %>
+                                    <tr class="alt">
+                                        <td>
+                                            <div class="typeblock">
+                                                <%= data[i].article_type %>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <a href="../teacherNewsDetail?id=<%= data[i].id %>&pageNo=<%= pageNo %>">
+                                                <%= data[i].article_subject %>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <%= (data[i].article_date).toLocaleString() %>
+                                        </td>
+                                        <td>
+                                            <!-- <%= data[i].id %>」是使用者點選新聞的流水號，程式將依此流水號取得使用者點選的新聞資料 -->
+                                            <a href="/teacherNewsEdit?id=<%= data[i].id %>&pageNo=<%= pageNo %>" title="範本編輯">
+                                                <img src="images/note_edit.png" width="16" height="16" />
+                                            </a>
+                                            <a href="/teacherNewsDelete?id=<%= data[i].id %>&pageNo=<%= pageNo %>" title="範本刪除">
+                                                <img src="images/cross.png" width="16" height="16" />
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <% } %>
+                                        <% } %>
+                    </table>
+                    <div class="showpage">
+                        目前頁面：
+                        <%= pageNo %> / 全部頁面：
+                            <%= totalPage %>
+                    </div>
+                    <div class="topfunction">
+                        <% if(pageNo > 1) { %>
+                            <a href="/teacherPage?pageNo=<%= (pageNo-1) %>" title="上一頁">
+                                <img src="images/prevpage.png" alt="上一頁" width="64" height="24" />
+                            </a>
+                            <% } %>
+                                <% if(pageNo < totalPage) { %>
+                                    <a href="/teacherPage?pageNo=<%= (pageNo+1) %>" title="下一頁">
+                                        <img src="images/nextpage.png" alt="下一頁" width="64" height="24" />
+                                    </a>
+                                    <% } %>
+                    </div>
+                </div>
+                <div id="footer">&copy;吳穎沺老師網路與科學學習研究團隊 Copyright© 2018</div>
+            </div>
+            <!-- bootstrap的CND -->
+            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+                crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                crossorigin="anonymous"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                crossorigin="anonymous"></script>
+    </body>
+
+</html>

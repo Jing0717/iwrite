@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+
+  <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <!-- Intro.js v2.7.0 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.7.0/introjs.min.css" rel="stylesheet" />
+
+  <!-- bootstrap的CND -->
+  <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+              crossorigin="anonymous"></script> -->
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdn.ckeditor.com/4.9.2/standard/ckeditor.js"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.7.0/intro.min.js"></script>
+  <!-- jQuery v1.9.1 -->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.4.1/jquery.fancybox.min.css">
+
+  <!-- Popper JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.4.1/jquery.fancybox.min.js"></script>
+  <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+                            crossorigin="anonymous"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <!-- bootstrap的CND -->
+  <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <% include API/header %>
+    <style>
+      /* h1 {
+      color: #fff;
+    } */
+
+      #content {
+        width: 100%;
+        min-height: 600px;
+        background: #444;
+        padding-top: 20px;
+        color: #FFF;
+      }
+
+      .register {
+        padding: 20px;
+        font-weight: 700;
+        border: #FFF solid 1px;
+        -moz-border-radius: 10px;
+        /* Gecko browsers */
+        -webkit-border-radius: 10px;
+        /* Webkit browsers */
+        border-radius: 10px;
+        /* W3C syntax */
+      }
+    </style>
+
+
+</head>
+
+<body>
+  <!-- 第一張 -->
+
+  <div class="container" style="margin: 42px 0 0 320px;">
+    <div class="row">
+      <h1 class="col-md-6 page_title ">小組專案申請</h1>
+      <h1 class="col-md-6 page_title ">個人專案申請</h1>
+    </div>
+    <!-- 直接傳值給後端 -->
+    <!-- <input type="hidden" id="group_type" name="group_type" value="g" /> -->
+    <div class="row">
+      <div class="col-md-6 register">
+
+        <div class="form-group">
+          <label for="p_name" class="col-sm-3 control-label">專案名稱：</label>
+          <div class="col-sm-8">
+            <div class="input-group">
+              <input type="text" class="form-control" id="p_name" name="p_name" placeholder="請輸入專案名">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="member02" class="col-sm-3 control-label">成員2：</label>
+          <div class="col-sm-8">
+            <div class="input-group">
+              <input type="text" class="form-control" id="member02" name="member02" placeholder="請輸入成員2帳號">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="member03" class="col-sm-3 control-label">成員3：</label>
+          <div class="col-sm-8">
+            <div class="input-group">
+              <input type="text" class="form-control" id="member03" name="member03" placeholder="請輸入成員3帳號">
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="form-group">
+          <label for="T_id" class="col-sm-3 control-label">指導老師：</label>
+          <div class="col-sm-8">
+            <select name="T_id" class="custom-select" id="inputGroupSelect01">
+              <option selected>Choose...</option>
+              <% if (teacher.length == 0){ %>
+                <option>目前沒有老師可以選</option>
+                <% }else{%>
+                  <% for (var i=0; i<teacher.length; i++) { %>
+                    <option value=< %=teacher[i].user_id%> >
+                      <%= teacher[i].user_id %>
+                    </option>
+                    <%}%>
+                      <%}%>
+            </select>
+          </div>
+        </div> -->
+
+        <div class="row">
+          <div class="col-md-5 col-md-offset-3 col-xs-12">
+            <!-- <button type="reset" class="btn btn-default btn-block">
+                <b>&nbsp&nbsp清空&nbsp&nbsp</b> -->
+          </div>
+          <div class="col-md-3 col-xs-12">
+            <button id="G_pro" class="btn btn-info btn-block">
+              <b>&nbsp&nbsp提交&nbsp&nbsp</b>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 register">
+
+        <div class="form-group">
+          <label for="p_name" class="col-sm-3 control-label">專案名稱：</label>
+          <div class="col-sm-8">
+            <div class="input-group">
+              <input type="text" class="form-control" id="s_name" name="s_name" placeholder="請輸入專案名">
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="form-group">
+          <label for="T_id" class="col-sm-3 control-label">指導老師：</label>
+          <div class="col-sm-8">
+            <select name="T_id" class="custom-select" id="inputGroupSelect01">
+              <option selected>Choose...</option>
+              <% if (teacher.length == 0){ %>
+                <option>目前沒有老師可以選</option>
+                <% }else{%>
+                  <% for (var i=0; i<teacher.length; i++) { %>
+                    <option value=< %=teacher[i].user_id%> >
+                      <%= teacher[i].user_id %>
+                    </option>
+                    <%}%>
+                      <%}%>
+            </select>
+          </div>
+        </div> -->
+
+        <div class="row">
+          <div class="col-md-5 col-md-offset-3 col-xs-12">
+            <!-- <button type="reset" class="btn btn-default btn-block">
+                <b>&nbsp&nbsp清空&nbsp&nbsp</b> -->
+          </div>
+          <div class="col-md-3 col-xs-12">
+            <button id="S_pro" class="btn btn-info btn-block">
+              <b>&nbsp&nbsp提交&nbsp&nbsp</b>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <input type="hidden" id="group_type" name="group_type" value="s" /> -->
+    <div id="footer">&copy;吳穎沺老師網路與科學學習研究團隊 Copyright© 2018</div>
+  </div>
+
+
+
+  <script>
+    $(function () {
+      $("#G_pro").click(function () {
+        var p_name = $('#p_name').val();
+        var member02 = $('#member02').val();
+        var member03 = $('#member03').val();
+        // alert(p_name+member02+member03)
+        if (p_name == "") {
+          alert("請填寫小組專案名稱")
+        }
+        else if (member02 == "") {
+          alert("請選擇成員2或改申請個人專案")
+        }
+        else if (member03 == "") {
+          $.ajax({
+            url: '/project_Add',
+            type: 'POST',
+            data: {
+              action: 'G2_Add',
+              p_name: p_name,
+              member02: member02,
+            },
+            error: function () {
+              alert("error");
+              return;
+            },
+            success: function (data) {
+              alert(data);
+              document.location.href = "/project_Select";
+            }
+          })
+        }
+        else {
+          $.ajax({
+            url: '/project_Add',
+            type: 'POST',
+            data: {
+              action: "G3_Add",
+              p_name: p_name,
+              member02: member02,
+              member03: member03,
+            },
+            error: function () {
+              alert("error");
+              return;
+            },
+            success: function (data) {
+              alert(data);
+              document.location.href = "/project_Select";
+            }
+          });
+        }
+      });
+
+      $("#S_pro").click(function () {
+        var s_name = $('#s_name').val();
+        $.ajax({
+          url: '/project_Add',
+          type: 'POST',
+          data: {
+            action: "S1_Add",
+            s_name: s_name,
+          },
+          error: function () {
+            alert("error");
+            return;
+          },
+          success: function (data) {
+            alert(data);
+            document.location.href = "/project_Select";
+          }
+        })
+      })
+    })
+  </script>
+
+</body>
+
+</html>

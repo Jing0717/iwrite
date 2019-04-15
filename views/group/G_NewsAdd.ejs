@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>中學生寫作平台</title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <!-- Intro.js v2.7.0 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.7.0/introjs.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.7.0/intro.min.js"></script>
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- jQuery v1.9.1 -->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.4.1/jquery.fancybox.min.css">
+  <!-- CKeditor CDN -->
+  <script src="https://cdn.ckeditor.com/4.9.2/standard/ckeditor.js"></script>
+  <!-- bootstrap的CDN -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous">
+</head>
+
+<body>
+  <!-- 上面header部分 -->
+  <% include API/header %>
+    <div id="warp">
+      <div id="header">
+        <div class="toplogin">
+        </div>
+      </div>
+      <div class="headings">
+        <h2>新增收藏介面</h2>
+      </div>
+      <div class="contentbox">
+        <form action="" id="form1" name="form1" method="POST">
+          <table width="90%" align="center">
+            <tr>
+              <th colspan="2" align="left"> 新增收藏</th>
+            </tr>
+            <tr>
+              <td width="20%" valign="baseline">
+                <strong>分類</strong>
+              </td>
+              <td valign="baseline">
+                <select name="news_type" id="news_type">
+                  <option value="公告" selected="selected">公告</option>
+                  <option value="更新">更新</option>
+                  <option value="更新">收藏</option>
+                  <option value="活動">活動</option>
+                  <option value="其他">其他</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td valign="baseline">
+                <strong>標題</strong>
+              </td>
+              <td valign="baseline">
+                <input name="news_subject" type="text" id="news_subject" size="45" required />
+              </td>
+            </tr>
+            <tr>
+              <td valign="baseline">
+                <strong>編輯者</strong>
+              </td>
+              <td valign="baseline">
+                <input type="text" name="news_editor" id="news_editor" required />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>前言</strong>
+              </td>
+              <td valign="baseline">
+                <textarea name="news_preface" id="news_preface" cols="60" rows="15"></textarea>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>正文</strong>
+              </td>
+              <td valign="baseline">
+                <textarea name="news_content" id="news_content" cols="60" rows="15"></textarea>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>結論</strong>
+              </td>
+              <td valign="baseline">
+                <textarea name="news_conclude" id="news_conclude" cols="60" rows="15"></textarea>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>引註資料</strong>
+              </td>
+              <td valign="baseline">
+                <textarea name="news_reference" id="news_reference" cols="60" rows="15"></textarea>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>筆記</strong>
+              </td>
+              <td valign="baseline">
+                <textarea name="note" id="note" cols="60" rows="15"></textarea>
+              </td>
+            </tr>
+            <tr>
+              <td valign="baseline">
+                <strong>審核</strong>
+              </td>
+              <td valign="baseline">
+                <input type="radio" name="news_ok" id="news_ok2" value="Yes" checked="checked" />已通過
+                <input name="news_ok" type="radio" id="news_ok" value="No" />審核中
+              </td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td>
+                <input type="submit" name="button" id="button" value="送出" />
+                <input type="reset" name="button2" id="button2" value="重設" />
+                <input type="button" name="button3" id="button3" value="回主頁面" onclick="window.location='/G_Page?pageNo=<%= pageNo %>&p_id=<%= p_id %>'"
+                />
+              </td>
+            </tr>
+          </table>
+          <span style="color:red">
+            <%= message %>
+          </span>
+        </form>
+      </div>
+      <div id="footer">&copy;吳穎沺老師網路與科學學習研究團隊 Copyright© 2018</div>
+    </div>
+    <!-- CKeditor CND -->
+    <script>
+      CKEDITOR.replace('news_preface');
+      CKEDITOR.replace('news_content');
+      CKEDITOR.replace('news_conclude');
+      CKEDITOR.replace('news_reference');
+      CKEDITOR.replace('note');
+    </script>
+    <!-- bootstrap的CND -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"></script>
+</body>
+
+</html>

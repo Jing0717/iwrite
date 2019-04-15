@@ -1,0 +1,86 @@
+<head>
+    <% include API/header %>
+</head>
+
+<body>
+    <div class="col-sm-12 row" style="margin-left:60px;">
+        <% if(data.length == 0) { %>
+            <div class="col-sm-2 wrap" style="width:50vw;">
+                <p>
+                    <a href="/project_Add" class="col-sm-2 wrap" style="width:200px;" title="新增專案">
+                        <img src="images/add_pro.PNG" style="width: 16vw; margin-top: -12px; margin-left: -10px;">
+                    </a>
+                    <img src="images/icon_warning.png" alt="Warning" />
+                    <span>注意</span> 目前範本資料庫中沒有任何資料！</p>
+            </div>
+            <% } else { %>
+                <a href="/project_Add" class="col-sm-2 wrap" style="width:200px;" title="新增專案">
+                    <img src="images/add_pro.PNG" style="width: 16vw; margin-top: -12px; margin-left: -10px;">
+                </a>
+                <% for(var i=0; i<data.length;i++) { %>
+                    <% if(data[i].group_type == 'g') { %>
+                        <div class="col-sm-2 wrap" style="width:200px;">
+                            <div class="circle" style="margin-top:15px">
+                                <div class="circle-circle">
+                                    <a href="/G_Page?p_id=<%= data[i].p_id %>">
+                                        <img src="images/default1.png">
+                                    </a>
+                                </div>
+                            </div>
+                            <li>
+                                <b>專案名稱:</b>
+                            </li>
+                            <li>
+                                <%=data[i].p_name%>
+                            </li>
+                            <li>
+                                <b>小組成員:</b>
+                            </li>
+                            <li>
+                                <%=data[i].nickname01%>
+                            </li>
+                            <li>
+                                <%=data[i].nickname02%>
+                            </li>
+                            <li>
+                                <%=data[i].nickname03%>
+                            </li>
+                        </div>
+                        <% } else {%>
+                            <div class="col-sm-2 wrap" style="width:200px;">
+                                <div class="circle" style="margin-top:15px">
+                                    <div class="circle-circle">
+                                        <a href="/studentPage?p_id=<%= data[i].p_id %>">
+                                            <img src="images/default2.png">
+                                        </a>
+                                    </div>
+                                </div>
+                                <li>
+                                    <b>專案名稱:</b>
+                                </li>
+                                <li>
+                                    <%=data[i].p_name%>
+                                </li>
+                                <li>
+                                    <b>成員:</b>
+                                </li>
+                                <li>
+                                    <%=data[i].nickname01%>
+                                </li>
+                            </div>
+                            <% } %>
+                                <% } %>
+                                    <% } %>
+    </div>
+
+    <div id="footer">
+        吳穎沺老師網路與科學學習研究團隊 Copyright© 2018.
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>

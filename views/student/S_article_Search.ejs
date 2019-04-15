@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <!-- Intro.js v2.7.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.7.0/introjs.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.7.0/intro.min.js"></script>
+    <!-- jQuery v1.9.1 -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.4.1/jquery.fancybox.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.4.1/jquery.fancybox.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <% include API/header %>
+        <% include API/left_sidebar %>
+            <script>
+                document.getElementById('start').addEventListener('click', function () {
+                    introJs().start();
+                });
+            </script>
+</head>
+
+<body>
+
+    <label>搜尋文章:</label>
+    <input type="text" id="search_Word" name="search_Word" value="" placeholder="輸入關鍵字">
+    <input onclick="Search();" name="sSearch" value="Search" class="btn">
+
+    <div class="row">
+        <div id="warp">
+            <div id="header">
+                <div class="toplogin">
+                </div>
+            </div>
+            <div class="headings">
+                <h2>教師協助資源</h2>
+            </div>
+            <div id="contentbox" class="contentbox">
+                <table width="100%">
+                    <tr>
+                        <th align="left">分類</th>
+                        <th align="left">標題</th>
+                        <th align="left">時間</th>
+                        <th align="left">收藏</th>
+                    </tr>
+                    <% if(data.length == 0) { %>
+                        <div class="status warning">
+                            <p>
+                                <img src="images/icon_warning.png" alt="Warning" />
+                                <span>注意</span> 目前範本資料庫中沒有任何資料！</p>
+                        </div>
+                        <% } else { %>
+                            <% for(var i=0; i<data.length; i++) { %>
+                                <tr class="alt">
+                                    <td>
+                                        <div class="typeblock">
+                                            <%= data[i].article_type %>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a data-fancybox data-type="iframe" data-src="/file/<%=data[i].filename%>" href="javascript:;">
+                                            <%= data[i].article_subject %>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <%= (data[i].article_date).toLocaleString() %>
+                                    </td>
+                                    <td>
+                                        <button class="btns" title="收藏" data-value="<%= data[i].id %>">
+                                            <img src="images/note_edit.png" width="16" height="16" />
+                                        </button>
+                                    </td>
+                                </tr>
+                                <% } %>
+                                    <% } %>
+                </table>
+                <div class="showpage">
+                    目前頁面：
+                    <%= pageNo %> / 全部頁面：
+                        <%= totalPage %>
+                </div>
+                <div class="topfunction">
+                    <% if(pageNo > 1) { %>
+                        <a href="/article_Search?pageNo=<%= (pageNo-1) %>&p_id=<%= p_id %>" title="上一頁">
+                            <img src="images/prevpage.png" alt="上一頁" width="64" height="24" />
+                        </a>
+                        <% } %>
+                            <% if(pageNo < totalPage) { %>
+                                <a href="/article_Search?pageNo=<%= (pageNo+1) %>&p_id=<%= p_id %>" title="下一頁">
+                                    <img src="images/nextpage.png" alt="下一頁" width="64" height="24" />
+                                </a>
+                                <% } %>
+                </div>
+            </div>
+            <div id="footer">&copy;吳穎沺老師網路與科學學習研究團隊 Copyright© 2018</div>
+        </div>
+    </div>
+
+
+
+
+    <!--  -->
+    <script>
+
+        function Search() {
+            var search = document.getElementsByName('search_Word')[0].value;
+            var url = window.location.toString(); //取得當前網址
+            var str = ""; //參數中等號左邊的值
+            var str_value = ""; //參數中等號右邊的值
+
+            if (url.indexOf("?") != -1) {
+                //如果網址有"?"符號
+                var ary = url.split("?")[1].split("&");
+                //取得"?"右邊網址後利用"&"分割字串存入ary陣列 ["a=1","b=2","c=3"]
+                for (var i in ary) {
+                    //取得陣列長度去跑迴圈，如:網址有三個參數，則會跑三次
+                    str = ary[i].split("=")[0];
+                    //取得參數"="左邊的值存入str變數中
+                    if (str == "p_id") {
+                        //若str等於想要抓取參數 如:b
+                        str_value = decodeURI(ary[i].split("=")[1]);
+                        //取得b等號右邊的值並經過中文轉碼後存入str_value
+                    }
+                }
+            }
+            window.location = "/article_Search?p_id=" + str_value + "&searchWord=" + search;
+        }
+
+
+        $(document).ready(function () {
+            // 所有 class 為 btns 的元件都綁定此 click 事件
+            $(".btns").click(function () {
+                var id = $(this).attr("id");
+                var name = $(this).attr("name");
+                var theClass = $(this).attr("class");
+                var value = $(this).data("value");
+                var url = window.location.toString(); //取得當前網址
+                var str = ""; //參數中等號左邊的值
+                var str_value = ""; //參數中等號右邊的值
+
+                if (url.indexOf("?") != -1) {
+                    //如果網址有"?"符號
+                    var ary = url.split("?")[1].split("&");
+                    //取得"?"右邊網址後利用"&"分割字串存入ary陣列 ["a=1","b=2","c=3"]
+                    for (var i in ary) {
+                        //取得陣列長度去跑迴圈，如:網址有三個參數，則會跑三次
+                        str = ary[i].split("=")[0];
+                        //取得參數"="左邊的值存入str變數中
+                        if (str == "p_id") {
+                            //若str等於想要抓取參數 如:b
+                            str_value = decodeURI(ary[i].split("=")[1]);
+                            //取得b等號右邊的值並經過中文轉碼後存入str_value
+                        }
+                    }
+                }
+
+                $.ajax({
+
+                    url: "/controller",
+                    type: "POST",
+                    data: {
+                        p_id: str_value,
+                        articleid: value,
+                        action: "collect",
+                    },
+                    error: function () {
+                        alert("error");
+                        return;
+                    },
+                    success: function (data) {
+
+                        alert(data);
+                        location.reload();
+                    }
+
+                });
+                // alert
+                //     (
+                //     "id = " + id + "\n" +
+                //     "name = " + name + "\n" +
+                //     "class = " + theClass + "\n" +
+                //     "value = " + value
+                //     );
+            });
+
+            // :button 意即  所有的(type="button") 且   class 名稱為 special-btn
+            $(":button.special-btn").click(function () {
+                alert('You clicked a special button');
+            });
+        });
+
+    </script>
+</body>
+
+</html>

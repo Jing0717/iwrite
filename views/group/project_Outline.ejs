@@ -1,0 +1,386 @@
+<html>
+<% include API/header %>
+<% include API/left_sidebar %>
+
+<head>
+    <meta charset="utf-8">
+    <!-- Intro.js v2.7.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.7.0/introjs.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.7.0/intro.min.js"></script>
+    <script src="https://cdn.ckeditor.com/4.9.2/standard/ckeditor.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <!-- jQuery v1.9.1 -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.4.1/jquery.fancybox.min.css">
+    <!-- bootstrap的CND -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <script>
+        document.getElementById('start').addEventListener('click', function () {
+            introJs().start();
+        });
+    </script>
+    <style>
+        .Preface,
+                .out_Content,
+                .Conclude,
+                .Reference {
+                    width: 700px;
+                }
+
+                #tool_content {
+                    margin-bottom: 10px;
+                    width: 100%;
+                    height: 520px;
+                    background: white;
+                    /* border: 5px solid #6699CC; */
+                }
+            </style>
+</head>
+
+<body>
+    <!--  -->
+    <div class="container-fluid">
+
+        <div class="row">
+            
+            <div id="tool_content" onclick="">
+                <iframe id="frame_url" src="/project_Map?p_id=<%=p_id%>" width="100%" height="670px;" style="border-style:none;"></iframe>
+            </div>
+        </div>
+        <div class="row">
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist" style="margin-left: 440px;">
+                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
+                        aria-controls="nav-home" aria-selected="true">前言</a>
+                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
+                        aria-controls="nav-profile" aria-selected="false">正文</a>
+                    <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab"
+                        aria-controls="nav-contact" aria-selected="false">結論</a>
+                    <a class="nav-item nav-link" id="nav-conclude-tab" data-toggle="tab" href="#nav-conclude" role="tab"
+                        aria-controls="nav-conclude" aria-selected="false">引註資料</a>
+                </div>
+            </nav>
+        </div>
+        <div class="row justify-content-md-center">
+            <div class="tab-content" id="nav-tabContent">
+                <!-- 前言分頁 -->
+                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                    <div class="" id="outlinebox1" name="outlinebox1">
+
+                        <% for(var x=1; x <= preface.length; x++) { %>
+                        <div>
+                            <br>第
+                            <%= x %>段前言大綱</br>
+                            <textarea name="Preface" class="Preface" id="change_val<%=preface[x-1].id%>" cols="70" rows="7"><%=preface[x-1].outline%></textarea>
+                            <button type="button" class="change" id="<%=preface[x-1].id%>">儲存這段前言大綱</button>
+                            <button type="button" class="delete" id="<%=preface[x-1].id%>">刪除這段前言大綱</button>
+
+                        </div>
+                        <% } %>
+                    </div>
+                    <div id="fun1">
+                        <button type="button" id="add1">新增一段前言大綱</button>
+                    </div>
+                </div>
+                <!-- 正文分頁 -->
+                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                    <div class="" id="outlinebox2" name="outlinebox2">
+
+                        <% for(var x=1; x <= content.length; x++) { %>
+                        <div>
+                            <br>第
+                            <%= x %>段正文大綱</br>
+                            <textarea name="out_Content" class="out_Content" id="change_val<%=content[x-1].id%>" cols="70"
+                                rows="7"><%=content[x-1].outline%></textarea>
+                            <button type="button" class="change" id="<%=content[x-1].id%>">儲存這段正文大綱</button>
+                            <button type="button" class="delete" id="<%=content[x-1].id%>">刪除一段正文大綱</button>
+                        </div>
+
+                        <% } %>
+                    </div>
+                    <div id="fun2">
+                        <button type="button" id="add2">新增一段正文大綱</button>
+                    </div>
+                </div>
+                <!-- 結論分頁 -->
+                <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-profile-tab">
+                    <div class="" id="outlinebox3" name="outlinebox3">
+
+                        <% for(var x=1; x <= conclude.length; x++) { %>
+                        <div>
+                            <br>第
+                            <%= x %>段結論大綱</br>
+                            <textarea name="Conclude" class="Conclude" id="change_val<%=conclude[x-1].id%>" cols=" 70"
+                                rows="7"><%=conclude[x-1].outline%></textarea>
+                            <button type="button" class="change" id="<%=conclude[x-1].id%>">儲存這段結論大綱</button>
+                            <button type="button" class="delete" id="<%=conclude[x-1].id%>">刪除一段結論大綱</button>
+                        </div>
+
+                        <% } %>
+                    </div>
+                    <div id="fun2">
+                        <button type="button" id="add3">新增一段結論大綱</button>
+                    </div>
+                </div>
+                <!-- 引註資料分頁 -->
+                <div class="tab-pane fade" id="nav-conclude" role="tabpanel" aria-labelledby="nav-profile-tab">
+                    <div class="" id="outlinebox4" name="outlinebox4">
+
+                        <% for(var x=1; x <= reference.length; x++) { %>
+                        <div>
+                            <br>第
+                            <%= x %>段引註資料大綱</br>
+                            <textarea name="Reference" class="Reference" id="change_val<%=reference[x-1].id%>" cols="70"
+                                rows="7"><%=reference[x-1].outline%></textarea>
+                            <button type="button" class="change" id="<%=reference[x-1].id%>">儲存這段引註資料大綱</button>
+                            <button type="button" class="delete" id="<%=reference[x-1].id%>">刪除一段引註資料大綱</button>
+                        </div>
+
+                        <% } %>
+                    </div>
+                    <div id="fun2">
+                        <button type="button" id="add4">新增一段引註資料大綱</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--  -->
+
+
+
+    <script>
+        $(document).ready(function () {
+
+            $(".delete").click(function () {
+                var id = $(this).attr('id');
+                console.log(id);
+
+                $.ajax({
+                    url: "/controller",
+                    method: "post",
+                    data: {
+                        action: "delete_outline",
+                        id: id,
+                    },
+                    success: function (data) {
+                        location.reload();
+                        alert(data);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(textStatus, errorThrown);
+                    }
+                });
+            })
+
+            $(".change").click(function () {
+                var id = $(this).attr('id');
+                console.log('#change_val' + id);
+                // var change_val = document.getElementById('change_val' + id);
+                var change_val = $('#change_val' + id).val();
+                console.log( change_val);
+                $.ajax({
+                    url: "/controller",
+                    method: "post",
+                    data: {
+                        action: "change_outline",
+                        outline: change_val,
+                        id: id,
+                    },
+                    success: function (data) {
+                        location.reload();
+                        alert(data);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(textStatus, errorThrown);
+                    }
+                });
+            })
+
+
+            $("#add1").click(function () {
+                var num1 = $(".Preface").length + 1
+                $("#fun1").hide();
+                $("<div><br>第" + num1 + "大綱</br><textarea data-type = Preface class= Preface id=Preface" + num1 + "></textarea><button type= button onclick = aaa() class = save_new1 data-type=Preface" + num1 + " >儲存這段大綱</button></div>").appendTo("#outlinebox1");
+            });
+
+            $("#add2").click(function () {
+                var num2 = $(".out_Content").length + 1
+                $("#fun2").hide();
+                alert(num2);
+                $("<div><br>第" + num2 + "大綱</br><textarea class= out_Content id=out_Content" + num2 + "></textarea><button type= button onclick = bbb() class = save_new2 data-type=out_Content" + num2 + " >儲存這段大綱</button></div>").appendTo("#outlinebox2");
+            });
+
+            $("#add3").click(function () {
+                var num3 = $(".Conclude").length + 1
+                $("#fun3").hide();
+                alert(num3);
+                $("<div><br>第" + num3 + "大綱</br><textarea class= Conclude id=Conclude" + num3 + "></textarea><button type= button onclick = ccc() class = save_new3 data-type=Conclude" + num3 + " >儲存這段大綱</button></div>").appendTo("#outlinebox3");
+            });
+            $("#add4").click(function () {
+                var num4 = $(".Reference").length + 1
+                $("#fun4").hide();
+                alert(num4);
+                $("<div><br>第" + num4 + "大綱</br><textarea class= Reference id=Reference" + num4 + "></textarea><button type= button onclick = ddd() class = save_new4 data-type=Reference" + num4 + " >儲存這段大綱</button></div>").appendTo("#outlinebox4");
+            });
+        })
+
+        //新增前言大綱到資料庫                
+        function aaa() {
+            var id = $(".save_new1").attr("data-type");
+            var new_outline = $("#" + id).val();
+            // console.log(new_outline);
+            var url = location.search;
+            var rid;
+            if (url.indexOf("?") != -1) {
+                var str = url.substr(1);
+                // str.split("=")[0] 為 userID
+                rid = str.split("=")[1];
+                console.log(rid);
+            }
+            if (rid == undefined) {
+                rid = '';
+
+            }
+            $.ajax({
+                url: "/controller",
+                method: "post",
+                data: {
+                    action: "save_outline",
+                    new_outline: new_outline,
+                    p_id: rid,
+                    page: "preface",
+                },
+                success: function (data) {
+                    location.reload();
+                    alert(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus, errorThrown);
+                }
+            });
+        }
+
+        //新增正文大綱到資料庫                
+        function bbb() {
+            var id = $(".save_new2").attr("data-type");
+            var new_outline = $("#" + id).val();
+            // console.log(new_outline);
+            var url = location.search;
+            var rid;
+            if (url.indexOf("?") != -1) {
+                var str = url.substr(1);
+                // str.split("=")[0] 為 userID
+                rid = str.split("=")[1];
+                console.log(rid);
+            }
+            if (rid == undefined) {
+                rid = '';
+
+            }
+            $.ajax({
+                url: "/controller",
+                method: "post",
+                data: {
+                    action: "save_outline",
+                    new_outline: new_outline,
+                    p_id: rid,
+                    page: "content",
+                },
+                success: function (data) {
+                    location.reload();
+                    alert(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus, errorThrown);
+                }
+            });
+        }
+
+        //新增結論大綱到資料庫                
+        function ccc() {
+            var id = $(".save_new3").attr("data-type");
+            var new_outline = $("#" + id).val();
+            console.log(new_outline);
+            var url = location.search;
+            var rid;
+            if (url.indexOf("?") != -1) {
+                var str = url.substr(1);
+                // str.split("=")[0] 為 userID
+                rid = str.split("=")[1];
+                console.log(rid);
+            }
+            if (rid == undefined) {
+                rid = '';
+
+            }
+            $.ajax({
+                url: "/controller",
+                method: "post",
+                data: {
+                    action: "save_outline",
+                    new_outline: new_outline,
+                    p_id: rid,
+                    page: "conclude",
+                },
+                success: function (data) {
+                    location.reload();
+                    alert(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus, errorThrown);
+                }
+            });
+        }
+
+        //新增結論大綱到資料庫                
+        function ddd() {
+            var id = $(".save_new4").attr("data-type");
+            var new_outline = $("#" + id).val();
+            // console.log(new_outline);
+            var url = location.search;
+            var rid;
+            if (url.indexOf("?") != -1) {
+                var str = url.substr(1);
+                // str.split("=")[0] 為 userID
+                rid = str.split("=")[1];
+                console.log(rid);
+            }
+            if (rid == undefined) {
+                rid = '';
+
+            }
+            $.ajax({
+                url: "/controller",
+                method: "post",
+                data: {
+                    action: "save_outline",
+                    new_outline: new_outline,
+                    p_id: rid,
+                    page: "reference",
+                },
+                success: function (data) {
+                    location.reload();
+                    alert(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus, errorThrown);
+                }
+            });
+        }
+
+
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>中學生寫作平台</title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <!-- bootstrap的CDN -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous">
+</head>
+
+<body>
+  <object data="/file/<%=data[0].filename%>" type="application/pdf" width="100%" height="100%">
+    <p>
+      <b>Example fallback content</b>: This browser does not support PDFs. Please download the PDF to view it:
+      <a href="/pdf/sample-3pp.pdf">Download PDF</a>.</p>
+  </object>
+
+  <div class="topfunction">
+    <a href="/teacherPage?pageNo=<%= pageNo %>" title="返回首頁">
+      <img src="images/home.png" alt="返回首頁" width="86" height="32" />
+    </a>
+  </div>
+  </div>
+</body>
+<div id="footer">&copy;吳穎沺老師網路與科學學習研究團隊 Copyright© 2018</div>
+</div>
+
+</html>

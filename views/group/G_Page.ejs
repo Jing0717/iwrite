@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Intro.js v2.7.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.7.0/introjs.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.7.0/intro.min.js"></script>
+    <!-- jQuery v1.9.1 -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.4.1/jquery.fancybox.min.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+    <% include API/header %>
+        <% include API/left_sidebar %>
+            <script>
+                document.getElementById('start').addEventListener('click', function () {
+                    introJs().start();
+                });
+            </script>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <!-- 小論文 -->
+        <div class="row" style="padding-bottom: 40px;">
+            <!-- <div>
+                <img id="change_open_1" src="/images/plus2.png" style="width:32px;" onclick="openCom(1);">
+            </div> -->
+            <div id="folder_show" class="col-sm-12 second_class div_1" style="display: block; overflow: hidden; height: 460px;">
+
+                <div id="warp">
+                    <div class="headings">
+                        <h2>小組專案最新收藏</h2>
+                    </div>
+                    <div class="contentbox">
+                        <table width="100%">
+                            <tr>
+                                <th align="left">分類</th>
+                                <th align="left">標題</th>
+                                <th align="left">時間</th>
+                                <th align="left">筆記</th>
+                            </tr>
+                            <% if(data.length == 0) { %>
+                                <div class="status warning">
+                                    <p>
+                                        <img src="images/icon_warning.png" alt="Warning" />
+                                        <span>注意</span> 請先到教師協助中蒐藏相關文章！</p>
+                                </div>
+                                <% } else { %>
+                                    <% for(var i=0; i<data.length; i++) { %>
+                                        <tr class="alt">
+                                            <td>
+                                                <div class="typeblock">
+                                                    <%= data[i].article_type %>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <a data-step="8" data-intro="觀看已收藏文章" data-fancybox data-type="iframe" data-src="/file/<%=data[i].filename%>" href="javascript:;">
+                                                    <%= data[i].article_subject %>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <%= (data[i].article_date).toLocaleString() %>
+                                            </td>
+                                            <td>
+                                                <a data-step="9" data-intro="點選此處，撰寫筆記" href="/article_Note?id=<%= data[i].id %>&pageNo=<%= pageNo %>&p_id=<%= p_id %>" title="作筆記">
+                                                    <img src="images/note_edit.png" width="16" height="16" />
+                                                </a>
+                                                <!-- <a data-step="10" data-intro="也可以刪除收藏" href="/G_NewsDelete?id=<%= data[i].id %>&pageNo=<%= pageNo %>&p_id=<%= p_id %>" title="刪除收藏">
+                                                    <img src="images/cross.png" width="16" height="16" />
+                                                </a> -->
+                                            </td>
+                                        </tr>
+                                        <% } %>
+                                            <% } %>
+                        </table>
+                        <div class="showpage">
+                            目前頁面：
+                            <%= pageNo %> / 全部頁面：
+                                <%= totalPage %>
+                        </div>
+                        <div class="topfunction">
+                            <% if(pageNo > 1) { %>
+                                <a href="/G_Page?pageNo=<%= (pageNo-1) %>&p_id=<%= p_id %>" title="上一頁">
+                                    <img src="images/prevpage.png" alt="上一頁" width="64" height="24" />
+                                </a>
+                                <% } %>
+                                    <% if(pageNo < totalPage) { %>
+                                        <a href="/G_Page?pageNo=<%= (pageNo+1) %>&p_id=<%= p_id %>" title="下一頁">
+                                            <img src="images/nextpage.png" alt="下一頁" width="64" height="24" />
+                                        </a>
+                                        <% } %>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- <div class="w-100"></div>
+            <div>
+                <img id="change_open_2" src="/images/plus2.png" style="width:32px;" onclick="openCom(2);">
+            </div>
+            <div id="folder_show" class="col-sm-12 second_class div_2" style="display: block; overflow: hidden; height: 460px;">
+
+                <div id="warp">
+                    <div class="headings">
+                        <h2>小組專案最新收藏</h2>
+                    </div>
+                    <div class="contentbox">
+                        <table width="100%">
+                            <tr>
+                                <th align="left">分類</th>
+                                <th align="left">標題</th>
+                                <th align="left">時間</th>
+                                <th align="left">編輯</th>
+                            </tr>
+                            <% if(data1.length == 0) { %>
+                                <div class="status warning">
+                                    <p>
+                                        <img src="images/icon_warning.png" alt="Warning" />
+                                        <span>注意</span> 請先到教師協助中蒐藏相關文章！</p>
+                                </div>
+                                <% } else { %>
+                                    <% for(var x=0; x<data1.length; x++) { %>
+                                        <tr class="alt">
+                                            <td>
+                                                <div class="typeblock">
+                                                    <%= data1[x].article_type %>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <a data-fancybox data-type="iframe" data-src="/file/<%=data1[x].filename%>" href="javascript:;">
+                                                    <%= data1[x].article_subject %>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <%= (data1[x].article_date).toLocaleString() %>
+                                            </td>
+                                            <td>
+                                                <a href="/article_Note?id=<%= data1[x].id %>&pageNo=<%= pageNo %>&p_id=<%= p_id %>" title="作筆記">
+                                                    <img src="images/note_edit.png" width="16" height="16" />
+                                                </a>
+                                                <a href="/G_NewsDelete?id=<%= data1[x].id %>&pageNo=<%= pageNo %>&p_id=<%= p_id %>" title="刪除收藏">
+                                                    <img src="images/cross.png" width="16" height="16" />
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <% } %>
+                                            <% } %>
+                        </table>
+                        <div class="showpage">
+                            目前頁面：
+                            <%= pageNo %> / 全部頁面：
+                                <%= totalPage %>
+                        </div>
+                        <div class="topfunction">
+                            <% if(pageNo > 1) { %>
+                                <a href="/G_Page?pageNo=<%= (pageNo-1) %>&p_id=<%= p_id %>" title="上一頁">
+                                    <img src="images/prevpage.png" alt="上一頁" width="64" height="24" />
+                                </a>
+                                <% } %>
+                                    <% if(pageNo < totalPage) { %>
+                                        <a href="/G_Page?pageNo=<%= (pageNo+1) %>&p_id=<%= p_id %>" title="下一頁">
+                                            <img src="images/nextpage.png" alt="下一頁" width="64" height="24" />
+                                        </a>
+                                        <% } %>
+                        </div>
+                    </div>
+                </div>
+
+            </div> -->
+            <!-- <div class="w-100"></div>
+            <div>
+                <img id="change_open_3" src="/images/plus2.png" style="width:32px;" onclick="openCom(3);">
+            </div>
+            <div id="folder_show" class="col-sm-12 second_class div_3" style="display: block; overflow: hidden; height: 460px;">
+
+                <div id="warp">
+                    <div class="headings">
+                        <h2>小組專案最新收藏</h2>
+                    </div>
+                    <div class="contentbox">
+                        <table width="100%">
+                            <tr>
+                                <th align="left">分類</th>
+                                <th align="left">標題</th>
+                                <th align="left">時間</th>
+                                <th align="left">編輯</th>
+                            </tr>
+                            <% if(data2.length == 0) { %>
+                                <div class="status warning">
+                                    <p>
+                                        <img src="images/icon_warning.png" alt="Warning" />
+                                        <span>注意</span> 請先到教師協助中蒐藏相關文章！</p>
+                                </div>
+                                <% } else { %>
+                                    <% for(var i=0; i<data2.length; i++) { %>
+                                        <tr class="alt">
+                                            <td>
+                                                <div class="typeblock">
+                                                    <%= data2[i].article_type %>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <a data-fancybox data-type="iframe" data-src="/file/<%=data2[i].filename%>" href="javascript:;">
+                                                    <%= data2[i].article_subject %>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <%= (data2[i].article_date).toLocaleString() %>
+                                            </td>
+                                            <td>
+                                                <a href="/article_Note?id=<%= data2[i].id %>&pageNo=<%= pageNo %>&p_id=<%= p_id %>" title="作筆記">
+                                                    <img src="images/note_edit.png" width="16" height="16" />
+                                                </a>
+                                                <a href="/G_NewsDelete?id=<%= data2[i].id %>&pageNo=<%= pageNo %>&p_id=<%= p_id %>" title="刪除收藏">
+                                                    <img src="images/cross.png" width="16" height="16" />
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <% } %>
+                                            <% } %>
+                        </table>
+                        <div class="showpage">
+                            目前頁面：
+                            <%= pageNo %> / 全部頁面：
+                                <%= totalPage %>
+                        </div>
+                        <div class="topfunction">
+                            <% if(pageNo > 1) { %>
+                                <a href="/G_Page?pageNo=<%= (pageNo-1) %>&p_id=<%= p_id %>" title="上一頁">
+                                    <img src="images/prevpage.png" alt="上一頁" width="64" height="24" />
+                                </a>
+                                <% } %>
+                                    <% if(pageNo < totalPage) { %>
+                                        <a href="/G_Page?pageNo=<%= (pageNo+1) %>&p_id=<%= p_id %>" title="下一頁">
+                                            <img src="images/nextpage.png" alt="下一頁" width="64" height="24" />
+                                        </a>
+                                        <% } %>
+                        </div>
+                    </div>
+                </div>
+
+            </div> -->
+        </div>
+        <div class="row">
+            <div id="footer">&copy;吳穎沺老師網路與科學學習研究團隊 Copyright© 2018</div>
+        </div>
+    </div>
+
+
+
+
+    <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.4.1/jquery.fancybox.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+<script>
+    // 展開按鈕按下
+    function openCom(num) {
+        $('#change_open_' + num).attr({
+            'onclick': 'closeCom(' + num + ');',
+            'src': "/images/minus2.png"
+        });
+        $('.div_' + num).removeAttr("style");
+        $('.div_' + num).css("display", "none");
+        $('.div_' + num).slideDown("300");
+    }
+    // 收合按鈕按下
+    function closeCom(num) {
+        $('#change_open_' + num).attr({
+            'onclick': 'openCom(' + num + ');',
+            'src': "/images/plus2.png",
+        });
+        $('.div_' + num).css("display", "block");
+        $('.div_' + num).css("overflow", "hidden");
+        $('.div_' + num).animate({ height: "430" });
+    }
+</script>
+
+</html>

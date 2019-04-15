@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>中學生寫作平台</title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <!-- bootstrap的CDN -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous">
+  <style>
+    h1 {
+      color: #fff;
+    }
+
+    #wrapper {
+      min-height: 100%;
+      position: relative;
+      padding: 5% 15% 0 15%;
+    }
+  </style>
+</head>
+
+<body>
+    
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-6">
+        <img src="images/sign_in02.png" style="width:50vw ; margin-left: 60px; margin-top: 43px;">
+      </div>
+      <div class="col-sm-6 text-center" style="padding:15vw">
+        <li class ""="" style="
+            margin-bottom: 15px;
+            font-size: 24px;
+            font-weight: 600;">歡迎登入中學生寫作平台 !
+        </li>
+        <form action="" method="POST">
+          <p>
+            <label class="small" for="user_id">會員帳號</label>
+            <input name="user_id" type="text" id="user_id" required />
+            <!-- 加入了「required」參數，表示使用者一定要輸入資料，否則系統不會送出表單，並且會顯示提示訊息 -->
+          </p>
+          <p>
+            <label class="small" for="user_password">會員密碼</label>
+            <input name="user_password" type="password" id="user_password" required />
+          </p>
+          <div>
+            <input type="submit" value="登入系統" />
+            <input name="button1" type="button" value="註冊會員" onclick="window.location='/studentAdd'" />
+            <!-- <input name="button1" type="button" value="填寫問卷" onclick="window.location='https://goo.gl/forms/NH3wytkWp3vjzWUl1'" /> -->
+          </div>
+          <span style="color:red">
+            <%= messages %>
+          </span>
+        </form>
+      </div>
+    </div>
+    <!--row end-->
+  </div>
+  <!--container end-->
+  <div id="footer">
+    吳穎沺老師網路與科學學習研究團隊 Copyright© 2018.
+  </div>
+
+  <!-- bootstrap的CND -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

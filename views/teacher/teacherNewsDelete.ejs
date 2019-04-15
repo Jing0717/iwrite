@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8'>
+	<title>中學生寫作平台</title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+	<div id="warp">
+		<div id="header">
+			<div class="toplogin">
+        <a href="/teacherNewsAdd/" title="新增範本"><img src="images/append.png" alt="新增範本" width="32" height="32" /></a>
+        <a href="/logout/"><img src="images/Lockoff.png" alt="登出管理介面" width="32" height="32" /></a>
+			</div>
+			<!-- <div class="logo">
+				<img src="images/DWonline.png" width="180" height="40" alt="news" />
+			</div> -->
+		</div>
+		<div class="headings">
+		  <h2>最新消息 - 管理介面</h2>
+		</div>  
+    <div class="contentbox">
+      <form action="" id="form1" name="form1" method="post">
+        <table width="90%" align="center">
+        <tr>
+          <th colspan="2" align="left"> 刪除範本</th>
+        </tr>
+        <tr>
+          <td width="20%"><strong>分類</strong></td>
+          <td><%= data[0].news_type %></td>
+        </tr>
+        <tr>
+          <td><strong>標題</strong></td>
+          <td><%= data[0].news_subject %></td>
+        </tr>
+        <tr>
+          <td><strong>編輯者</strong></td>
+          <td><%= data[0].news_editor %></td>
+        </tr>
+        <tr>
+          <td><strong>內容</strong></td>
+          <td><%= data[0].news_content %></td>
+        </tr>
+        <tr>
+          <td><strong>日期</strong></td>
+          <td><%= (data[0].news_date).toLocaleString() %></td>
+        </tr>
+        <tr>
+          <td><strong><font color="#FF0000">是否確定刪除？</font></strong></td>
+          <td><input type="submit" name="button" id="button" value="確定" />
+          <input type="button" name="button3" id="button3" value="回主頁面" onclick="window.location='/teacherPage?pageNo=<%= pageNo %>'" />
+        </tr>
+        </table>
+      </form>
+    </div>
+    <div id="footer">&copy;吳穎沺老師網路與科學學習研究團隊 Copyright© 2018</div>
+	</div>
+</body>
+</html>

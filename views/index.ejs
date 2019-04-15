@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>中學生寫作平台</title>
+    <!-- 套用CSS檔 -->
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    	<!-- bootstrap的CDN -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  </head>
+  <body>
+  <!-- 上面header部分 -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">中學生寫作平台</a>
+    <!-- .navbar-toggler 漢堡式選單按鈕 -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <!-- .navbar-toggler-icon 漢堡式選單Icon -->
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  <!-- .collapse.navbar-collapse 用於外層中斷點群組和隱藏導覽列內容 -->
+      <!-- 選單項目&漢堡式折疊選單 -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <!-- active表示當前頁面 -->
+        <li class="nav-item active">
+          <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+        </li>
+  
+        <!-- .dropdown Navbar選項使用下拉式選單 -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            學生個人區
+          </a>
+          <!-- .dropdown-menu 下拉選單內容 -->
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/">蒐藏文章</a>
+            <a class="dropdown-item" href="/">閱讀文章</a>
+            <a class="dropdown-item" href="/">撰寫筆記</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/">求助老師</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            學生小組區
+          </a>
+          <!-- .dropdown-menu 下拉選單內容 -->
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">聊天室</a>
+            <a class="dropdown-item" href="#">行事曆</a>
+            <a class="dropdown-item" href="#">共寫大綱</a>
+            <a class="dropdown-item" href="#">心智圖</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">共寫小論文</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">Disabled</a>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </div>
+    <div class="toplogin">
+      <!-- 傳送首頁目前頁數 (pageNo) 是為了由登入頁面回到首頁時，可以顯示原來頁面 -->
+        <a href="/login?pageNo=<%= pageNo %>"title="登入會員">
+          <img src="images/Lock.png" alt="登入會員" width="32" height="32"/></a>
+      </div>
+  </nav>
+
+    <div id="warp">
+      <div id="header">
+        
+        <!-- <div class="logo">
+            <img src="images/DWonline.png" width="180" height="40" />
+        </div> -->
+      </div>
+      <div class="headings">
+        <h2>寫作系統</h2>
+      </div>
+      <div class="contentbox">
+        <table width="100%">
+          <tr>
+            <th align="left">分類</th>
+            <th align="left">標題</th>
+            <th align="left">時間</th>
+            <th align="left">點閱</th>
+          </tr>
+          <%if(data.length == 0){%>
+            <div class="status warning">
+              <p><img src="images/icon_warning.png"alt="Warning"/><span>注意</span>目前資料庫沒有任何資料!</p>
+            </div>
+          <%} else{%>
+            <% for(var i=0; i < data.length; i++){ %>
+            <tr class="alt">
+              <td><div class="typeblock"><%=data[i].news_type%></div></td>
+              <td><a href="/detail?id=<%=data[i].news_id%>&pageNo=<%=pageNo%>"><%=data[i].news_subject%></a></td>
+              <!-- 因為在資料庫中日期欄位的資料型態為「日期時間」格式，無法直接顯示，因此用「toLocaleString()」方法轉換為字串格式才能顯示 -->
+              <td><%=(data[i].news_date).toLocaleString()%></td>
+              <td><%=data[i].news_hits%></td>
+            </tr>
+            <% } %>
+          <%}%>
+        </table>
+        <!-- 切換頁面 -->
+        <div class="showpage">
+          目前頁面:<%=pageNo%>/全部頁面:<%=totalPage%>
+        </div>
+        <div class="topfunction">
+          <%if(pageNo>1){%>
+            <a href="/index?pageNo=<%= (pageNo-1) %>" title="上一頁"> <!--建立 上一頁 按鈕 會開啟 index 首頁，並且傳送前一個頁面的頁碼給伺服器，所以會顯示上一頁資料 -->
+              <img src="images/prevpage.png" alt="上一頁" width="64" height="24" /></a>
+          <%}%>
+          <!-- 條件不符合會直接消失，到最後一頁時，會沒有下一頁可以按 -->
+          <%if(pageNo < totalPage){%>
+            <a href="/index?pageNo=<%= (pageNo+1) %>" title="下一頁">
+              <img src="images/nextpage.png" alt="下一頁" width="64" height="24" /></a> 
+          <%}%>
+        </div>
+      </div>
+      <div id="footer">&copy;吳穎沺老師網路與科學學習研究團隊 Copyright© 2018</div>
+  </div>
+  	<!-- bootstrap的CND -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>

@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <!-- Intro.js v2.7.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.7.0/introjs.min.css" rel="stylesheet" />
+
+    <!-- bootstrap的CND -->
+    <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+                crossorigin="anonymous"></script> -->
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.ckeditor.com/4.9.2/standard/ckeditor.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.7.0/intro.min.js"></script>
+    <!-- jQuery v1.9.1 -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.4.1/jquery.fancybox.min.css">
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.4.1/jquery.fancybox.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+                                crossorigin="anonymous"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    <% include API/header %>
+        <% include API/left_sidebar %>
+            <script>
+                document.getElementById('start').addEventListener('click', function () {
+                    introJs().start();
+                });
+            </script>
+
+            <style>
+                body {
+                    height: 100%;
+                    background-color: #f5f7f5;
+                }
+
+                .com_box {
+                    border: 1px solid #d8d8d8;
+                    background-color: #fcfcfd;
+                    padding: 20px 25px;
+                }
+
+                .search_box {
+                    border: 1px solid #749e85;
+                    border-radius: 4px;
+                    background-color: #e4ede7;
+                    padding: 5px;
+                }
+
+                .input_box {
+                    padding: 5px;
+                    width: 100%;
+                    border: 1px #DDDFE2 solid;
+                    margin: 10px 0;
+                }
+
+                /*討論串CSS*/
+
+                .post_name {
+                    color: #536B59;
+                    font-weight: bold;
+                    font-size: 15px;
+                    cursor: pointer;
+
+                }
+
+                .post_load {
+                    color: #333;
+                }
+
+                /**/
+
+                .closebtn {
+                    z-index: 1;
+                    cursor: pointer;
+                    padding-left: 5px;
+                    width: 30px;
+                }
+
+                /**/
+
+                .menu {
+                    display: flex;
+                    left: 0;
+                }
+
+                .menu>div {
+                    min-height: 90vh;
+                    width: 13vw;
+                    box-sizing: border-box;
+                    display: flex;
+                    /*align-items: center;*/
+                }
+
+                .texto {
+                    color: #555;
+                    margin: 0 auto;
+                    width: 50%;
+                    display: none;
+                    text-align: center;
+                    font-size: 1em;
+                }
+
+                .col_1 {
+                    background-color: #fff;
+                    border: #555 2px solid;
+                }
+
+                .col_2 {
+                    background-color: #e6f3fd;
+                    border: #d8d8d8 1px solid;
+                }
+
+                .col_3 {
+                    background: #b8dbf8;
+                }
+
+                .col_4 {
+                    background: #99ccf5;
+                }
+
+                .col_5 {
+                    background: #5aadf0;
+                }
+
+                .col_6 {
+                    background: #2c95eb;
+                }
+
+                /*拖拉*/
+
+                .column {
+                    width: 40vw;
+                    float: left;
+                    padding-bottom: 100px;
+                    margin-top: 100px;
+                    margin-left: 5px;
+                    /*background-color: #888;*/
+                }
+
+                .portlet {
+                    margin: 0 1em 1em 0;
+                    padding: 0.3em;
+                }
+
+                .portlet-header {
+                    padding: 0.2em 0.3em;
+                    margin-bottom: 0.5em;
+                    position: relative;
+                }
+
+                .portlet-toggle {
+                    position: absolute;
+                    top: 50%;
+                    right: 0;
+                    margin-top: -8px;
+                }
+
+                .portlet-content {
+                    padding: 0.4em;
+                }
+
+                .overflow_el {
+                    white-space: nowrap;
+                    width: 10vw;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+
+                .portlet-placeholder {
+                    border: 1px dotted black;
+                    margin: 0 1em 1em 0;
+                    height: 50px;
+                }
+
+                .p_title {
+                    position: absolute;
+                    top: 10;
+
+                }
+
+                .p_content {
+                    /*display: inline;*/
+                    word-wrap: break-word;
+                    width: 13vw;
+                }
+
+                /**/
+
+                /* select Hidden placeholder */
+
+                select option[disabled]:first-child {
+                    color: grey;
+                    /*display: none;*/
+                }
+
+                /*垃圾桶*/
+
+                #delbox {
+                    /*clear :both;*/
+                    min-height: 90vh;
+                    /*width:70px;*/
+                    background: url("/images/trashcan-01.png");
+                    background-repeat: no-repeat;
+                }
+
+                #delbox.delet {
+                    background: url("/images/trashcan-02.png");
+                    background-repeat: no-repeat;
+                }
+
+                #delbox:hover {
+                    cursor: pointer;
+                }
+
+                /*垃圾桶裡的物件復原*/
+
+                .t_resume:hover {
+                    cursor: pointer;
+                    border: 3px solid #C91F37;
+                }
+
+                .t_resume:active {
+                    background-color: rgba(211, 211, 211, 0.5);
+                    border: 3px solid #555;
+                    box-shadow: 1px 1px 3px rgba(20%, 20%, 40%, 0.5);
+                }
+
+                #loading {
+                    z-index: 100;
+                    left: 0;
+                    top: 0;
+                    position: fixed;
+                    width: 846;
+                    height: 585px;
+                    background: url("/wutsfks2/images/icon/loading.gif");
+                    background-repeat: no-repeat;
+                }
+
+                .mem_img {
+                    height: 80px;
+                }
+
+                .mem_leader {
+                    width: 35px;
+                    margin: 0px 0px 5px 5px;
+                }
+
+                .btn_join {
+                    background-color: #fff;
+                    border: 2px solid #444;
+                    color: #444;
+                }
+
+                .btn_join:hover {
+                    background-color: #ccc;
+                    border: 2px solid #000;
+                    color: #000;
+                }
+
+                .btn_add {
+                    border: 1px solid #777;
+                }
+
+                .s_mem {
+                    cursor: pointer;
+                    border-bottom: 1px solid #777;
+                }
+
+                .s_mem:hover {
+                    font-weight: bold;
+                    font-style: italic;
+                }
+            </style>
+</head>
+
+<body>
+
+    <div class="row">
+        <input class="btn btn_add" style="margin-left:20px; float:right;" type="button" value="+新增工作事項" onclick="posttask()">
+    </div>
+
+
+
+    <!-- 新增工作事項框 -->
+    <div class="dialog_taskpost" title="Add EVENT" style="display: none; margin-left: 30px; width: 700px">
+        <div class="col-sm-10 col-sm-offset-1 " style=" color:gray; font-size:17px; margin-top: 30px; text-align: left;">
+            <form id="form_post" target='submitFrame' enctype="multipart/form-data" method="POST">
+                <textarea id="task_content" class="input_box" cols="40" rows="4" placeholder="簡要工作內容..." required="required"></textarea>
+                <li>工作負責人
+                    <select id="task_person" class="empty" name="task_person">
+                        <option value="" selected disabled>選擇工作負責人</option>
+                        <%if(pro_info[0].nickname01){%>
+                            <option value="<%=pro_info[0].nickname01%>">
+                                <%=pro_info[0].nickname01%>
+                            </option>
+                            <%}%>
+                                <%if(pro_info[0].nickname02){%>
+                                    <option value="<%=pro_info[0].nickname02%>">
+                                        <%=pro_info[0].nickname02%>
+                                    </option>
+                                    <%}%>
+                                        <%if(pro_info[0].nickname03){%>
+                                            <option value="<%=pro_info[0].nickname03%>">
+                                                <%=pro_info[0].nickname03%>
+                                            </option>
+                                            <%}%>
+                    </select>
+                </li>
+                <hr>
+                <button type="button" id="datapost_task" class="button button-rounded button-flat-primary button" style="float: right;">新增工作事項</button>
+            </form>
+            <!-- 不跳轉畫面 -->
+            <iframe width=1px height=1px border=0px name='submitFrame' style='border:0px;'></iframe>
+        </div>
+    </div>
+    <!-- 垃圾桶 -->
+    <div class="dialog_delreview" title="工作垃圾桶(點選工作即可復原)" style="display: none; margin-left: 30px; width: 700px">
+        <div id="show_delreview"></div>
+    </div>
+    <!-- <button type="submit" id="datapost_task" class="button button-rounded button-flat-primary button" style=" float: right; ">新增工作事項</button> -->
+
+    <div class="row">
+        <div id="show_pro_content" class="menu col-sm-11">
+            <!-- 偷藏的project_no -->
+            <!-- <input id="pro_no_val" value="21" style="display: none; width: 13vw;"> -->
+            <div id="mySidenav_1" class="col_1" style="vertical-align: top; width: 12vw;">
+                <!--  -->
+                <div class="p_title">
+                    <li id="p_title_1" class="p_content">工作暫放區:0階段</li>
+                </div>
+
+                <div id="column_tmp-area" class="column ui-sortable" title="tmp-area" style="display: block;">
+                    <% for(var i=0; i<data.length; i++) { %>
+                        <% if(data[i].belong_taskname == "tmp-area") { %>
+                            <div class="portlet ui-widget ui-widget-content ui-helper-clearfix ui-corner-all " title="<%=data[i].id%>" name="結衣">
+                                <div class="portlet-header ui-widget-header ui-corner-all ui-sortable-handle">
+                                    執行:
+                                    <%=data[i].task_mem%>
+                                </div>
+                                <div class="portlet-content">
+                                    <%=data[i].task_content%>
+                                </div>
+                                <div class="portlet-content" style="color:#044F67;">
+                                    <%=data[i].start.toUTCString()%>
+                                </div>
+                            </div>
+                            <% } %>
+                                <% } %>
+                </div>
+            </div>
+
+            <div id="mySidenav_2" class="col_2" style="vertical-align: top; width: 12vw;">
+                <div class="p_title">
+                    <li id="p_title_2" class="p_content">backlog</li>
+                </div>
+                <div id="column_backlog" class="column ui-sortable" title="backlog" style="display: block;">
+                    <% for(var i=0; i<data.length; i++) { %>
+                        <% if(data[i].belong_taskname == "backlog") { %>
+                            <div class="portlet ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" title="<%=data[i].id%>" name="結衣">
+                                <div class="portlet-header ui-widget-header ui-corner-all ui-sortable-handle">
+                                    執行:
+                                    <%=data[i].task_mem%>
+                                </div>
+                                <div class="portlet-content">
+                                    <%=data[i].task_content%>
+                                </div>
+                                <div class="portlet-content" style="color:#044F67;">
+                                    <%=data[i].start.toUTCString()%>
+                                </div>
+                            </div>
+                            <% } %>
+                                <% } %>
+                </div>
+            </div>
+
+            <div id="mySidenav_3" class="col_3" style="vertical-align: top; width: 12vw;">
+                <div class="p_title">
+                    <li id="p_title_3" class="p_content">ready</li>
+                </div>
+                <div id="column_ready" class="column ui-sortable" title="ready" style="display: block;">
+                    <% for(var i=0; i<data.length; i++) { %>
+                        <% if(data[i].belong_taskname == "ready") { %>
+                            <div class="portlet ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" title="<%=data[i].id%>" name="結衣">
+                                <div class="portlet-header ui-widget-header ui-corner-all ui-sortable-handle">
+                                    執行:
+                                    <%=data[i].task_mem%>
+                                </div>
+                                <div class="portlet-content">
+                                    <%=data[i].task_content%>
+                                </div>
+                                <div class="portlet-content" style="color:#044F67;">
+                                    <%=data[i].start.toUTCString()%>
+                                </div>
+                            </div>
+                            <% } %>
+                                <% } %>
+                </div>
+            </div>
+
+            <div id="mySidenav_4" class="col_4" style="vertical-align: top; width: 12vw;">
+                <div class="p_title">
+                    <li id="p_title_4" class="p_content">in-progress</li>
+                </div>
+                <div id="column_in-progress" class="column ui-sortable" title="in-progress" style="display: block;">
+                    <% for(var i=0; i<data.length; i++) { %>
+                        <% if(data[i].belong_taskname == "in-progress") { %>
+                            <div class="portlet ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" title="<%=data[i].id%>" name="結衣">
+                                <div class="portlet-header ui-widget-header ui-corner-all ui-sortable-handle">
+                                    執行:
+                                    <%=data[i].task_mem%>
+                                </div>
+                                <div class="portlet-content">
+                                    <%=data[i].task_content%>
+                                </div>
+                                <div class="portlet-content" style="color:#044F67;">
+                                    <%=data[i].start.toUTCString()%>
+                                </div>
+                            </div>
+                            <% } %>
+                                <% } %>
+                </div>
+            </div>
+
+            <div id="mySidenav_5" class="col_5" style="vertical-align: top; width: 12vw;">
+                <div class="p_title">
+                    <li id="p_title_5" class="p_content">needs-review</li>
+                </div>
+
+                <div id="column_needs-review" class="column ui-sortable" title="needs-review" style="display: block;">
+                    <% for(var i=0; i<data.length; i++) { %>
+                        <% if(data[i].belong_taskname == "needs-review") { %>
+                            <div class="portlet ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" title="<%=data[i].id%>" name="結衣">
+                                <div class="portlet-header ui-widget-header ui-corner-all ui-sortable-handle">
+                                    執行:
+                                    <%=data[i].task_mem%>
+                                </div>
+                                <div class="portlet-content">
+                                    <%=data[i].task_content%>
+                                </div>
+                                <div class="portlet-content" style="color:#044F67;">
+                                    <%=data[i].start.toUTCString()%>
+                                </div>
+                            </div>
+                            <% } %>
+                                <% } %>
+                </div>
+            </div>
+
+            <div id="mySidenav_6" class="col_6" style="vertical-align: top; width: 12vw;">
+                <div class="p_title">
+                    <li id="p_title_6" class="p_content">done</li>
+                </div>
+                <div id="column_done" class="column ui-sortable" title="done" style="display: block;">
+                    <% for(var i=0; i<data.length; i++) { %>
+                        <% if(data[i].belong_taskname == "done") { %>
+                            <div class="portlet ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" title="<%=data[i].id%>" name="結衣">
+                                <div class="portlet-header ui-widget-header ui-corner-all ui-sortable-handle">
+                                    執行:
+                                    <%=data[i].task_mem%>
+                                </div>
+                                <div class="portlet-content">
+                                    <%=data[i].task_content%>
+                                </div>
+                                <div class="portlet-content" style="color:#044F67;">
+                                    <%=data[i].start.toUTCString()%>
+                                </div>
+                            </div>
+                            <% } %>
+                                <% } %>
+                </div>
+            </div>
+        </div>
+        <!-- 垃圾桶 -->
+        <div id="delbox" class="col-sm-1" onclick="del_review()"></div>
+    </div>
+
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+
+        $(function () {
+            //新增工作事項
+            $("#datapost_task").click(function () {
+                if ($('#task_content').val() != "" && $('#task_person').val() != null) {
+                    var task_mem = document.getElementById("task_person").value;
+                    console.log(task_mem);
+                    var url = window.location.toString(); //取得當前網址
+                    var str = ""; //參數中等號左邊的值
+                    var str_value = ""; //參數中等號右邊的值
+
+                    if (url.indexOf("?") != -1) {
+                        //如果網址有"?"符號
+                        var ary = url.split("?")[1].split("&");
+                        //取得"?"右邊網址後利用"&"分割字串存入ary陣列 ["a=1","b=2","c=3"]
+                        for (var i in ary) {
+                            //取得陣列長度去跑迴圈，如:網址有三個參數，則會跑三次
+                            str = ary[i].split("=")[0];
+                            //取得參數"="左邊的值存入str變數中
+                            if (str == "p_id") {
+                                //若str等於想要抓取參數 如:b
+                                str_value = decodeURI(ary[i].split("=")[1]);
+                                //取得b等號右邊的值並經過中文轉碼後存入str_value
+                            }
+                        }
+                    }
+
+                    $.ajax({
+                        url: '/controller',
+                        type: 'POST',
+                        data: {
+                            action: "new_task",
+                            task_mem: task_mem,
+                            task_content: $('#task_content').val(),
+                            belong_taskname: 'tmp-area',
+                            p_id: str_value
+                        },
+                        error: function (xhr) {
+                            console.log('Ajax request 發生錯誤');
+                        },
+                        success: function (userid) {
+                            alert("新增成功");
+                            window.location.assign(window.location.href);//刷新當前頁
+                        }
+                    });
+                }
+                else alert("請確認內容皆填寫完畢！");
+            });
+            $("#delbox").droppable({
+                hoverClass: "delet",
+                drop: function (event, ui) {
+                    var movedel_no = $(ui.draggable).attr('title')
+                    console.log(movedel_no);
+                    ui.draggable.hide(); //hide draggable 
+                    // update task_in
+                    $.ajax({
+                        url: '/controller',
+                        type: 'POST',
+                        data: {
+                            action: "delete_task",
+                            movetask_no: movedel_no
+                        },
+                        error: function (xhr) {
+                            console.log(xhr);
+                        },
+                        success: function (list) {
+                            console.log(list);
+                        }
+                    })
+                }
+            });
+        });
+
+        function posttask() {
+            $(".dialog_taskpost").dialog({
+                // maxHeight: 800,
+                minWidth: 600,
+                modal: true,//僅能點選dialog的原件
+                position: {
+                    my: "center",
+                    at: "center"
+                }
+            });
+        }
+
+        $(".column").sortable({
+            connectWith: ".column",
+            handle: ".portlet-header",
+            cancel: ".portlet-toggle",
+            placeholder: "portlet-placeholder ui-corner-all",
+            revert: true, //緩沖效果  
+            cursor: 'move',
+            //移動完更新，觸發ajax SQL
+            receive: function (event, ui) {
+                // 移動的物件NO.
+                var move_no = $(ui.item).attr('title')
+                console.log(move_no);
+                // 移動到的工作區名稱
+                var move_name = $(this).attr("title");
+                console.log(move_name);
+
+                $.ajax({
+                    url: '/controller',
+                    type: 'POST',
+                    data: {
+                        action: "save_task_change",
+                        movetask_no: move_no,
+                        moveover_name: move_name,
+                    },
+                    error: function (xhr) {
+                        console.log(xhr);
+                    },
+                    success: function (data) {
+                        console.log('change');
+                    }
+                })
+                move_no = "";
+                move_name = "";
+            }
+        });
+
+        $(".portlet")
+            .addClass("ui-widget ui-widget-content ui-helper-clearfix ui-corner-all")
+            .find(".portlet-header")
+            .addClass("ui-widget-header ui-corner-all")
+            .prepend("<span class='ui-icon ui-icon-minusthick portlet-toggle'></span>");
+
+        $(".portlet-toggle").on("click", function () {
+            var icon = $(this);
+            icon.toggleClass("ui-icon-minusthick ui-icon-plusthick");
+            icon.closest(".portlet").find(".portlet-content").toggle();
+        });
+
+
+        // 垃圾桶開啟dialog
+        function del_review() {
+            // $("#show_delreview").empty();
+            // load被移除工作
+            // $.ajax({
+            //     url: '../../api/upload/browse_deltask_content.php?pro_no=<?php echo $pro_no;?>',
+            //     type: 'GET',
+            //     contentType: "application/json; charset=utf-8",
+            //     data: {},
+            //     error: function (xhr) { console.log(xhr); },
+            //     success: function (list) {
+            //         var data = JSON.parse(list);
+            //         if (data[0] > '0') { // 作業個數
+            //             for (i = 1; i <= data[0]; i++) {
+            //                 // 工作事項
+            //                 $('#show_delreview').append(
+            //                     '<div id="resume_' + data[i].task_no + '" class="t_resume portlet ui-widget ui-widget-content ui-helper-clearfix ui-corner-all " title="' + data[i].task_no + '" name="' + data[i].dotask_user_name + '" onclick="task_resume(' + data[i].task_no + ')">' +
+            //                     '<div class="portlet-header ui-widget-header ui-corner-all">' +
+            //                     '<span class="portlet-toggle">執行:' + data[i].dotask_user_name + '</span>' +
+            //                     data[i].buildtask_user_name +
+            //                     '</div>' +
+            //                     '<div class="portlet-content">' + data[i].task_title + '</div>' +
+            //                     '</div>'
+            //                 );
+            //             }
+            //         }
+            //         else {
+            //             $('#show_delreview').append(
+            //                 '<center style="color:#7f8c8d; font-size:18px; font-weight:bolder; margin-top:15px;">目前空空的！</center>'
+            //             );
+            //         }
+            //     }
+            // });
+            $(".dialog_delreview").dialog({
+                // maxHeight: 800,
+                minWidth: 600,
+                modal: true
+            });
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script type="text/javascript" src="https://rawgit.com/caolan/async/master/dist/async.min.js"></script>
+  <script src="https://cdn.ckeditor.com/4.10.1/standard/ckeditor.js"></script>
+
+  <% include API/header %>
+</head>
+<style>
+  body {
+    height: 100%;
+    background-color: #f5f7f5;
+  }
+
+  .com_box {
+    border: 1px solid #d8d8d8;
+    background-color: #fcfcfd;
+    padding: 20px 25px;
+  }
+
+  .search_box {
+    border: 1px solid #749e85;
+    border-radius: 4px;
+    background-color: #e4ede7;
+    padding: 5px;
+  }
+
+  .input_box {
+    padding: 5px;
+    width: 100%;
+    border: 1px #DDDFE2 solid;
+    margin: 10px 0;
+  }
+
+
+  /* select Hidden placeholder */
+
+  select option[disabled]:first-child {
+    color: grey;
+  }
+
+  /*專案div*/
+
+  .pro_div {
+    background-color: #FFF;
+    border: 1px solid #F4F4F4;
+    box-shadow: 0 1px 5px 2px rgba(222, 222, 222, 0.4);
+    -webkit-box-shadow: 0 1px 5px 2px rgba(222, 222, 222, 0.4);
+    -moz-box-shadow: 0 1px 5px 2px rgba(222, 222, 222, 0.4);
+    height: 25vw;
+    margin: 15px 23px;
+    padding: 1%;
+  }
+
+  .prosub_div {
+    background-color: #FCFCFC;
+    padding: 2%;
+    height: 19vw;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .protag_div {
+    border-radius: 7px;
+    float: right;
+    margin-top: 5%;
+    padding: 2%;
+    text-align: center;
+    width: 7vw;
+
+  }
+
+  .mask {
+    background-color: rgba(110, 119, 131, 0.5);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+  }
+
+  /*新增虛擬按鈕*/
+
+  .img_add {
+    opacity: 0.7;
+    height: 25vw;
+  }
+
+  .img_add:hover {
+    opacity: 1;
+    border: 2px solid #777;
+    border-radius: 10px;
+  }
+</style>
+
+<body>
+  <%if(data.length == 0){%>
+  <p>尚未有專案申請</p>
+  <%} else {%>
+  <!--  -->
+  <div class="container-fluid">
+    <div class="row">
+      <b style="margin-left:1%; font-size:28px;">指導中的專案:</b>
+    </div>
+    <div id="project_append" class="row">
+      <!-- <div class="col-sm-3" style="padding:13px; margin-right:15px; margin-left:10px;">
+              <img class="img_add" src="/images/addpro.png" style="cursor:pointer;" onclick="buildpro();" title="新增專案">
+            </div> -->
+      <% for (var i=0; i<data.length; i++){ %>
+      <div class="col-sm-3 pro_div">
+        <div class="prosub_div view-one">
+          <li style="font-size:18px; font-weight:bold;">
+            題目:
+            <%=data[i].p_name%>
+          </li>
+          <li style="padding:30px; font-size:18px; ">
+            成員:</br>
+            <span style="margin-left:30px; font-size:18px; ">
+              <%=data[i].nickname01%>
+            </span>
+            </br>
+            <span style="margin-left:30px; font-size:18px; ">
+              <%=data[i].nickname02%>
+            </span>
+            </br>
+            <span style="margin-left:30px; font-size:18px; ">
+              <%=data[i].nickname03%>
+            </span>
+            </br>
+
+          </li>
+          <li style="bottom:1vw; position:absolute; font-size:12px;">2017-05-22 20:56:34</li>
+          <div class="mask">
+            <h2>
+              <%=data[i].p_name%>
+            </h2>
+            <div class="col-sm-10 col-sm-offset-1" style="margin-top:5%;">
+              <img style="float:left;" src="/images/pro_out.png" title="取消指導" onclick="reject('<%= data[i].p_id%>');">
+
+              <img style="float:right;" src="/images/pro_enter.png" title="ENTER" data-toggle="modal" data-target="#exampleModal<%= data[i].p_id%>"
+                onclick="newEd('<%= data[i].p_id%>');">
+
+            </div>
+
+          </div>
+        </div>
+        <!--  -->
+        <div class="modal fade bd-example-modal-lg" id="exampleModal<%= data[i].p_id%>" tabindex="-1" role="dialog"
+          aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">題目:
+                  <%= data[i].p_name%>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="container-fluid">
+                  <textarea name="detail<%= data[i].p_id%>" class="form-control" id="message-text<%= data[i].p_id%>"
+                    readonly>
+                          前言:<%= data[i].preface%></br>
+                          正文:<%= data[i].content%></br>
+                          結論:<%= data[i].conclude%></br>
+                          引註資料:<%= data[i].reference%></br>
+                        </textarea>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <p>建議:</p></br>
+                <textarea name="suggest<%= data[i].p_id%>" class="form-control" id="suggest<%= data[i].p_id%>"><%= data[i].T_suggest%></textarea>
+                <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+                <button type="button" class="saveSuggest btn btn-primary" data-suggest="<%= data[i].p_id%>">儲存</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <button type="button" class="protag_div btn btn-primary">Save changes</button> -->
+        <!-- <div id="pro_tag_1" class="protag_div" style="border: 1px solid rgb(255, 76, 76);">其他自定</div> -->
+      </div>
+      <%}%>
+    </div>
+  </div>
+  <%}%>
+  <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+  <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+
+  <script>
+    $(document).ready(function () {
+      $(".prosub_div").hover(function () {
+        $(this).css("background-color", "#000;");
+      }, function () {
+        $(this).css("background-color", "pink");
+      });
+
+      $(".saveSuggest").click(function () {
+        var id = $(this).attr('data-suggest');
+        var suggest = $('#suggest'+id).val();
+        console.log(suggest);
+        $.ajax({
+          url: '/controller',
+          type: 'POST',
+          data: {
+            action: "save_Suggest",
+            T_suggest: suggest,
+            p_id: id
+          },
+          error: function (xhr) {
+            console.log('Ajax request 發生錯誤');
+          },
+          success: function (data) {
+            alert(data);
+            window.location.assign(window.location.href);//刷新當前頁
+          }
+        });
+      })
+    });
+
+    //拒絕專案申請為指導老師
+    function reject(p_id) {
+      if (confirm("確定要取消指導?")) {
+        reason = prompt('拒絕申請原因');
+        $.ajax({
+          url: '/controller',
+          type: 'POST',
+          data: {
+            action: "reject_apply",
+            reject_reason: reason,
+            p_id: p_id
+          },
+          error: function (xhr) {
+            console.log('Ajax request 發生錯誤');
+          },
+          success: function (userid) {
+            alert("拒絕成功");
+            window.location.assign(window.location.href);//刷新當前頁
+          }
+        });
+      }
+    }
+
+    function newEd(id) {
+      // var hEd = CKEDITOR.instances['detail' + id].destroy();
+      // if (hEd) {
+      //   hEd.destroy(true);
+      // }
+      // // CKEDITOR.instances = new Array();
+      CKEDITOR.replace('detail' + id, { height: '400px' });
+      // CKEDITOR.replace('suggest' + id, { height: '400px' });
+      // CKEDITOR.replaceAll();
+
+    }
+    //觀看專案文章給意見
+    function reject(p_id) {
+      if (confirm("確定要取消指導?")) {
+        reason = prompt('拒絕申請原因');
+        $.ajax({
+          url: '/controller',
+          type: 'POST',
+          data: {
+            action: "",
+            reject_reason: reason,
+            p_id: p_id
+          },
+          error: function (xhr) {
+            console.log('Ajax request 發生錯誤');
+          },
+          success: function (userid) {
+            alert("拒絕成功");
+            window.location.assign(window.location.href);//刷新當前頁
+          }
+        });
+      }
+    }
+
+
+  </script>
+</body>
+
+</html>

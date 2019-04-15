@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<!-- Intro.js v2.7.0 -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.7.0/introjs.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.7.0/intro.min.js"></script>
+<script src="https://cdn.ckeditor.com/4.10.1/standard/ckeditor.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+<!-- jQuery v1.9.1 -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.4.1/jquery.fancybox.min.css">
+<!-- 1. Add latest jQuery and fancybox files -->
+<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.1/dist/jquery.fancybox.min.css" />
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.1/dist/jquery.fancybox.min.js"></script>
+<% include API/header %>
+    <% include API/left_sidebar %>
+        <script>
+            document.getElementById('start').addEventListener('click', function () {
+                introJs().start();
+            });
+        </script>
+
+        <style>
+            html,
+            body,
+            .container {
+                height: 95%;
+            }
+
+            #tool_scroll {
+                position: fixed;
+                top: 50px;
+                right: -700px;
+                width: 700px;
+                z-index: 3;
+            }
+
+            #tool_scroll_T {
+                position: fixed;
+                top: 370px;
+                right: -700px;
+                width: 700px;
+                z-index: 3;
+            }
+
+            #tool_tab {
+                position: absolute;
+                top: 50px;
+                left: -30px;
+                width: 30px;
+                line-height: 24px;
+                background: #6699CC;
+                color: #ffffff;
+                text-align: center;
+                padding: 9px 0;
+                -moz-border-radius-topleft: 10px;
+                -moz-border-radius-bottomleft: 10px;
+                border-top-left-radius: 10px;
+                border-bottom-left-radius: 10px;
+            }
+
+            #tool_tab_T {
+                position: absolute;
+                top: 0px;
+                left: -30px;
+                width: 30px;
+                line-height: 24px;
+                background: rgb(204, 102, 119);
+                color: #ffffff;
+                text-align: center;
+                padding: 9px 0;
+                -moz-border-radius-topleft: 10px;
+                -moz-border-radius-bottomleft: 10px;
+                border-top-left-radius: 10px;
+                border-bottom-left-radius: 10px;
+            }
+
+            #tool_content {
+                margin-top: 10px;
+                margin-bottom: 10px;
+                width: 700px;
+                height: 520px;
+                background: white;
+                border: 5px solid #6699CC;
+            }
+
+            #tool_content_T {
+                margin-top: 0px;
+                margin-bottom: 0px;
+                width: 700px;
+                height: 337px;
+                background: white;
+                border: 5px solid rgb(204, 102, 119);
+            }
+        </style>
+
+        <body>
+            <%if(data[0].apply_in == 1){%>
+                <div id="tool_scroll_T">
+                    <div id="tool_tab_T" onclick="">
+                        老師建議
+                    </div>
+                    <div id="tool_content_T" onclick="">
+                        <%=data[0].T_suggest%>
+                    </div>
+                </div>
+                <%}%>
+                    <div id="tool_scroll">
+                        <div id="tool_tab" onclick="">
+                            編輯歷程
+                        </div>
+                        <div id="tool_content" onclick="">
+                            <nav>
+                                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                    <a class="nav-item nav-link active" id="nav-preface-tab" data-toggle="tab" href="#nav-preface-bk" role="tab" aria-controls="nav-preface"
+                                        aria-selected="true">前言備份</a>
+                                    <a class="nav-item nav-link" id="nav-content-tab" data-toggle="tab" href="#nav-content-bk" role="tab" aria-controls="nav-content"
+                                        aria-selected="false">正文備份</a>
+                                    <a class="nav-item nav-link" id="nav-conclude-tab" data-toggle="tab" href="#nav-conclude-bk" role="tab" aria-controls="nav-conclude"
+                                        aria-selected="false">結論備份</a>
+                                    <a class="nav-item nav-link" id="nav-referece-tab" data-toggle="tab" href="#nav-reference-bk" role="tab" aria-controls="nav-referece"
+                                        aria-selected="false">引註資料備份</a>
+                                </div>
+                            </nav>
+                            <div class="tab-content" id="nav-backup">
+                                <div class="tab-pane fade show active" id="nav-preface-bk" role="tabpanel" aria-labelledby="nav-preface-tab">
+                                    <% if (prefaceBackup.length <= 1) { %>
+                                        <p>尚未有人編輯過前言</p>
+                                        <% } else if (prefaceBackup.length > 3) { %>
+                                            <textarea name="preface_backup" style="height: 460px; width: 690px;" readonly>
+                                            撰寫人:<%=prefaceBackup[1].nickname%></br>
+                                            儲存時間:<%=(prefaceBackup[1].time).toLocaleString()%></br>
+                                        <%=prefaceBackup[1].backup_content%></br>
+                                            撰寫人:<%=prefaceBackup[2].nickname%></br>
+                                            儲存時間:<%=(prefaceBackup[2].time).toLocaleString()%></br>
+                                        <%=prefaceBackup[2].backup_content%></br>
+                                            撰寫人:<%=prefaceBackup[3].nickname%></br>
+                                            儲存時間:<%=(prefaceBackup[3].time).toLocaleString()%></br>
+                                        <%=prefaceBackup[3].backup_content%>
+                                    </textarea>
+
+                                            <% } else if (prefaceBackup.length > 2) { %>
+                                                <textarea name="preface_backup" style="height: 460px; width: 690px;" readonly>
+                                                撰寫人:<%=prefaceBackup[1].nickname%></br>
+                                                儲存時間:<%=(prefaceBackup[1].time).toLocaleString()%></br>
+                                            <%=prefaceBackup[1].backup_content%></br>
+                                                撰寫人:<%=prefaceBackup[2].nickname%></br>
+                                                儲存時間:<%=(prefaceBackup[2].time).toLocaleString()%></br>
+                                            <%=prefaceBackup[2].backup_content%></br>
+                                        </textarea>
+                                                <% } else { %>
+                                                    <textarea name="preface_backup" style="height: 460px; width: 690px;" readonly>
+                                                    撰寫人:<%=prefaceBackup[1].nickname%></br>
+                                                    儲存時間:<%=(prefaceBackup[1].time).toLocaleString()%></br>
+                                                <%=prefaceBackup[1].backup_content%></br>
+                                            </textarea>
+                                                    <% } %>
+                                </div>
+                                <div class="tab-pane fade" id="nav-content-bk" role="tabpanel" aria-labelledby="nav-content-tab">
+                                    <% if (contentBackup.length <= 1) { %>
+                                        <p>尚未有人編輯過正文</p>
+                                        <% } else if (contentBackup.length > 3) { %>
+                                            <textarea name="content_backup" style="height: 460px; width: 690px;" readonly>
+                                            撰寫人:<%=contentBackup[1].nickname%></br>
+                                            儲存時間:<%=(contentBackup[1].time).toLocaleString()%></br>
+                                        <%=contentBackup[1].backup_content%></br>
+                                            撰寫人:<%=contentBackup[2].nickname%></br>
+                                            儲存時間:<%=(contentBackup[2].time).toLocaleString()%></br>
+                                        <%=contentBackup[2].backup_content%></br>
+                                            撰寫人:<%=contentBackup[3].nickname%></br>
+                                            儲存時間:<%=(contentBackup[3].time).toLocaleString()%></br>
+                                        <%=contentBackup[3].backup_content%>
+                                    </textarea>
+
+                                            <% } else if (contentBackup.length > 2) { %>
+                                                <textarea name="content_backup" style="height: 460px; width: 690px;" readonly>
+                                                撰寫人:<%=contentBackup[1].nickname%></br>
+                                                儲存時間:<%=(contentBackup[1].time).toLocaleString()%></br>
+                                            <%=contentBackup[1].backup_content%></br>
+                                                撰寫人:<%=contentBackup[2].nickname%></br>
+                                                儲存時間:<%=(contentBackup[2].time).toLocaleString()%></br>
+                                            <%=contentBackup[2].backup_content%></br>
+                                        </textarea>
+                                                <% } else { %>
+                                                    <textarea name="content_backup" readonly>
+                                                    撰寫人:<%=contentBackup[1].nickname%></br>
+                                                    儲存時間:<%=(contentBackup[1].time).toLocaleString()%></br>
+                                                <%=contentBackup[1].backup_content%></br>
+                                            </textarea>
+                                                    <% } %>
+                                </div>
+                                <div class="tab-pane fade" id="nav-conclude-bk" role="tabpanel" aria-labelledby="nav-conclude-tab">
+                                    <% if (concludeBackup.length <= 1) { %>
+                                        <p>尚未有人編輯過結論</p>
+                                        <% } else if (concludeBackup.length > 3) { %>
+                                            <textarea name="conclude_backup" style="height: 460px; width: 690px;" readonly>
+                                            撰寫人:<%=concludeBackup[1].nickname%></br>
+                                            儲存時間:<%=(concludeBackup[1].time).toLocaleString()%></br>
+                                        <%=concludeBackup[1].backup_content%></br>
+                                            撰寫人:<%=concludeBackup[2].nickname%></br>
+                                            儲存時間:<%=(concludeBackup[2].time).toLocaleString()%></br>
+                                        <%=concludeBackup[2].backup_content%></br>
+                                            撰寫人:<%=concludeBackup[3].nickname%></br>
+                                            儲存時間:<%=(concludeBackup[3].time).toLocaleString()%></br>
+                                        <%=concludeBackup[3].backup_content%>
+                                    </textarea>
+
+                                            <% } else if (concludeBackup.length > 2) { %>
+                                                <textarea name="conclude_backup" style="height: 460px; width: 690px;" readonly>
+                                                撰寫人:<%=concludeBackup[1].nickname%></br>
+                                                儲存時間:<%=(concludeBackup[1].time).toLocaleString()%></br>
+                                            <%=concludeBackup[1].backup_content%></br>
+                                                撰寫人:<%=concludeBackup[2].nickname%></br>
+                                                儲存時間:<%=(concludeBackup[2].time).toLocaleString()%></br>
+                                            <%=concludeBackup[2].backup_content%></br>
+                                        </textarea>
+                                                <% } else { %>
+                                                    <textarea name="conclude_backup" style="height: 460px; width: 690px;" readonly>
+                                                    撰寫人:<%=concludeBackup[1].nickname%></br>
+                                                    儲存時間:<%=(concludeBackup[1].time).toLocaleString()%></br>
+                                                <%=concludeBackup[1].backup_content%></br>
+                                            </textarea>
+                                                    <% } %>
+                                </div>
+                                <div class="tab-pane fade" id="nav-reference-bk" role="tabpanel" aria-labelledby="nav-reference-tab">
+                                    <% if (referenceBackup.length <= 1) { %>
+                                        <p>尚未有人編輯過引註資料</p>
+                                        <% } else if (referenceBackup.length > 3) { %>
+                                            <textarea name="reference_backup" style="height: 460px; width: 690px;" readonly>
+                                            撰寫人:<%=referenceBackup[1].nickname%></br>
+                                            儲存時間:<%=(referenceBackup[1].time).toLocaleString()%></br>
+                                        <%=referenceBackup[1].backup_content%></br>
+                                            撰寫人:<%=referenceBackup[2].nickname%></br>
+                                            儲存時間:<%=(referenceBackup[2].time).toLocaleString()%></br>
+                                        <%=referenceBackup[2].backup_content%></br>
+                                            撰寫人:<%=referenceBackup[3].nickname%></br>
+                                            儲存時間:<%=(referenceBackup[3].time).toLocaleString()%></br>
+                                        <%=referenceBackup[3].backup_content%>
+                                    </textarea>
+
+                                            <% } else if (referenceBackup.length > 2) { %>
+                                                <textarea name="reference_backup" style="height: 460px; width: 690px;" readonly>
+                                                撰寫人:<%=referenceBackup[1].nickname%></br>
+                                                儲存時間:<%=(referenceBackup[1].time).toLocaleString()%></br>
+                                            <%=referenceBackup[1].backup_content%></br>
+                                                撰寫人:<%=referenceBackup[2].nickname%></br>
+                                                儲存時間:<%=(referenceBackup[2].time).toLocaleString()%></br>
+                                            <%=referenceBackup[2].backup_content%></br>
+                                        </textarea>
+                                                <% } else { %>
+                                                    <textarea name="reference_backup" style="height: 460px; width: 690px;" readonly>
+                                                    撰寫人:<%=referenceBackup[1].nickname%></br>
+                                                    儲存時間:<%=(referenceBackup[1].time).toLocaleString()%></br>
+                                                <%=referenceBackup[1].backup_content%></br>
+                                            </textarea>
+                                                    <% } %>
+                                </div>
+                            </div>
+                            <!-- <iframe id="frame_url" src="" width="100%" height="670px;" style="border-style:none;"></iframe> -->
+                        </div>
+                    </div>
+
+                    <div class="container-fluid">
+                        <div class="row">
+                            <tr>
+                                <h2 align="center">共同編輯區</h2>
+                            </tr>
+                        </div>
+                        <!-- <textarea style="resize:none;width:600px;height:200px;" readonly></textarea> -->
+
+                        <div class="row">
+                            <div class="col-12">
+
+                                <nav>
+                                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                        <a class="nav-item nav-link active" id="nav-preface-tab" data-toggle="tab" href="#nav-preface" role="tab" aria-controls="nav-preface"
+                                            aria-selected="true">前言</a>
+                                        <a class="nav-item nav-link" id="nav-content-tab" data-toggle="tab" href="#nav-content" role="tab" aria-controls="nav-content"
+                                            aria-selected="false">正文</a>
+                                        <a class="nav-item nav-link" id="nav-conclude-tab" data-toggle="tab" href="#nav-conclude" role="tab" aria-controls="nav-conclude"
+                                            aria-selected="false">結論</a>
+                                        <a class="nav-item nav-link" id="nav-reference-tab" data-toggle="tab" href="#nav-reference" role="tab" aria-controls="nav-reference"
+                                            aria-selected="false">引註資料</a>
+                                        <a class="nav-item nav-link" id="nav-preview-tab" data-toggle="tab" href="#nav-preview" role="tab" aria-controls="nav-preview"
+                                            aria-selected="false">預覽</a>
+                                    </div>
+                                </nav>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+
+                                <div class="tab-content" id="nav-tabContent">
+                                    <div class="tab-pane fade show active" id="nav-preface" role="tabpanel" aria-labelledby="nav-preface-tab">
+                                        <% for(var x=1; x < preface.length+1 ; x++) { %>
+                                            <div>
+                                                <br>第
+                                                <%= x %>段大綱</br>
+                                                    <span>
+                                                        <%=preface[x-1].outline%>
+                                                    </span>
+                                                    </br>
+                                                    <textarea id="<%=preface[x-1].id%>" name="preface<%=x%>" class="preface" style="height: 120px; width: 900px;"><%=preface[x-1].content%></textarea>
+                                                    <button data-type="<%=preface[x-1].id%>" class="btn  save_content" align="right" style="float:right">儲存前言</button>
+                                            </div>
+                                            <% } %>
+
+                                    </div>
+                                    <div class="tab-pane fade" id="nav-content" role="tabpanel" aria-labelledby="nav-content-tab">
+                                        <% for(var x=1; x < content.length+1; x++) { %>
+                                            <div>
+                                                <br>第
+                                                <%= x %>段大綱</br>
+                                                    <span>
+                                                        <%=content[x-1].outline%>
+                                                    </span>
+                                                    </br>
+                                                    <tr>
+                                                        <td valign="baseline">
+
+                                                            <textarea id="<%=content[x-1].id%>" name="content" class="content" style="height: 120px; width: 900px;"><%=content[x-1].content%></textarea>
+                                                            <button data-type="<%=content[x-1].id%>" class="btn  save_content" align="right" style="float:right">儲存正文</button>
+
+                                                        </td>
+                                                    </tr>
+                                            </div>
+                                            <% } %>
+
+                                    </div>
+                                    <div class="tab-pane fade" id="nav-conclude" role="tabpanel" aria-labelledby="nav-conclude-tab">
+                                        <tr>
+                                            <% for(var x=1; x < conclude.length+1; x++) { %>
+                                                <div>
+                                                    <br>第
+                                                    <%= x %>段大綱</br>
+                                                        <span>
+                                                            <%=conclude[x-1].outline%>
+                                                        </span>
+                                                        </br>
+                                                        <tr>
+                                                            <td valign="baseline">
+
+                                                                <textarea id="<%=conclude[x-1].id%>" name="conclude" class="conclude" style="height: 120px; width: 900px;"><%=conclude[x-1].content%></textarea>
+                                                                <button data-type="<%=conclude[x-1].id%>" class="btn  save_content" align="right" style="float:right">儲存結論</button>
+
+                                                            </td>
+                                                        </tr>
+                                                </div>
+                                                <% } %>
+
+                                        </tr>
+                                    </div>
+                                    <div class="tab-pane fade" id="nav-reference" role="tabpanel" aria-labelledby="nav-reference-tab">
+                                        <% for(var x=1; x < reference.length+1; x++) { %>
+                                            <div>
+                                                <br>第
+                                                <%= x %>段大綱</br>
+                                                    <span>
+                                                        <%=reference[x-1].outline%>
+                                                    </span>
+                                                    </br>
+                                                    <tr>
+                                                        <td valign="baseline">
+
+                                                            <textarea id="<%=reference[x-1].id%>" name="reference" class="reference" style="height: 120px; width: 900px;"><%=reference[x-1].content%></textarea>
+                                                            <button data-type="<%=reference[x-1].id%>" class="btn  save_content" align="right" style="float:right">儲存引註資料</button>
+
+                                                        </td>
+                                                    </tr>
+                                            </div>
+                                            <% } %>
+
+                                    </div>
+
+                                    <div class="tab-pane fade" id="nav-preview" role="tabpanel" aria-labelledby="nav-preview-tab">
+                                        <textarea name="preview" id="preview" class="preview" style="height: 800px; width: 1200px;" readonly>
+                                    <b>前言</b></br>
+                                    <% for(var x=1; x < preface.length+1 ; x++) { %>
+                                    <span>
+                                        <%=preface[x-1].content%>
+                                    </span></br>
+                                    <% } %></br>
+
+                                    <b>正文</b></br>
+                                    <% for(var x=1; x < content.length+1 ; x++) { %>
+                                    <span>
+                                        <%=content[x-1].content%>
+                                    </span></br>
+                                    <% } %></br>
+
+                                    <b>結論</b></br>
+                                    <% for(var x=1; x < conclude.length+1 ; x++) { %>
+                                    <span>
+                                        <%=conclude[x-1].content%>
+                                    </span></br>
+                                    <% } %></br>
+
+                                    <b>引註資料</b></br>
+                                    <% for(var x=1; x < reference.length+1 ; x++) { %>
+                                    <span>
+                                        <%=reference[x-1].content%>
+                                    </span></br>
+                                    <% } %></br>
+                                </textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <script src="/js/jquery-3.3.1.min.js"></script>
+
+                    <script>
+
+                        //工具包點擊顯示及收合
+                        var w2 = $("#tool_scroll").width();
+
+                        $("#tool_tab").click(function () { //滑鼠點擊時
+                            if ($("#tool_scroll").css('right') == '-' + w2 + 'px') {
+                                $("#tool_scroll").animate({ right: '0px' }, 500, 'swing');
+                            } else {
+                                $("#tool_scroll").animate({ right: '-' + w2 + 'px' }, 500, 'swing');
+                            }
+                        });
+
+                        //工具包點擊顯示及收合
+                        var w1 = $("#tool_scroll_T").width();
+
+                        $("#tool_tab_T").click(function () { //滑鼠點擊時
+                            if ($("#tool_scroll_T").css('right') == '-' + w1 + 'px') {
+                                $("#tool_scroll_T").animate({ right: '0px' }, 500, 'swing');
+                            } else {
+                                $("#tool_scroll_T").animate({ right: '-' + w1 + 'px' }, 500, 'swing');
+                            }
+                        });
+
+                        $(".save_content").click(function () {
+                            var id = $(this).attr('data-type');
+                            var content = $("#" + id).val();
+                            var phase = $("#" + id).attr("class");
+                            var url = location.search;
+                            var rid;
+                            if (url.indexOf("?") != -1) {
+                                var str = url.substr(1);
+                                // str.split("=")[0] 為 userID
+                                rid = str.split("=")[1];
+                                console.log(rid);
+                            }
+                            if (rid == undefined) {
+                                rid = '';
+
+                            }
+                            console.log(phase);
+                            $.ajax({
+                                url: "/controller",
+                                method: "post",
+                                data: {
+                                    action: "save_content",
+                                    id: id,
+                                    content: content,
+                                },
+                                success: function (data) {
+                                    location.reload();
+                                    alert(data);
+                                },
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    console.log(textStatus, errorThrown);
+                                }
+                            });
+                            //備份
+                            $.ajax({
+                                url: "/controller",
+                                method: "post",
+                                data: {
+                                    action: "save_backup",
+                                    content: content,
+                                    p_id: rid,
+                                    phase: phase,
+                                    id: id,
+                                },
+                                success: function (data) {
+                                    alert(data);
+                                    location.reload();
+                                },
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    console.log(textStatus, errorThrown);
+                                }
+                            });
+                        })
+
+
+
+                        //儲存前言按鈕
+                        function savePreface() {
+                            var a = "";
+                            a = CKEDITOR.instances.preface.getData();
+                            console.log(a);
+                            var url = location.search;
+                            var rid;
+                            if (url.indexOf("?") != -1) {
+                                var str = url.substr(1);
+                                // str.split("=")[0] 為 userID
+                                rid = str.split("=")[1];
+                                console.log(rid);
+                            }
+                            if (rid == undefined) {
+                                rid = '';
+
+                            }
+                            $.ajax({
+                                url: "/controller",
+                                method: "post",
+                                data: {
+                                    action: "savePreface",
+                                    preface: a,
+                                    p_id: rid
+                                },
+                                success: function (data) {
+                                    alert(data);
+                                    location.reload();
+                                },
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    console.log(textStatus, errorThrown);
+                                }
+                            });
+                            // 儲存前言備份
+                            $.ajax({
+                                url: "/controller",
+                                method: "post",
+                                data: {
+                                    action: "Preface_backup",
+                                    preface: a,
+                                    p_id: rid
+                                },
+                                success: function (data) {
+                                    alert(data);
+                                    location.reload();
+                                },
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    console.log(textStatus, errorThrown);
+                                }
+                            });
+                        }
+
+                        CKEDITOR.replace('preview', { height: '400px' });
+                        CKEDITOR.replace('preface_backup', { height: '358px' });
+                        CKEDITOR.replace('content_backup', { height: '358px' });
+                        CKEDITOR.replace('conclude_backup', { height: '358px' });
+                        CKEDITOR.replace('reference_backup', { height: '358px' });
+                    </script>
+
+
+        </body>
+
+</html>

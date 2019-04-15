@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<!-- Intro.js v2.7.0 -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.7.0/introjs.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.7.0/intro.min.js"></script>
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- jQuery v1.9.1 -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.4.1/jquery.fancybox.min.css">
+<% include API/header %>
+    <% include API/left_sidebar %>
+
+        <head>
+            <meta charset="utf-8">
+            <script src="https://cdn.ckeditor.com/4.9.2/standard/ckeditor.js"></script>
+        </head>
+
+        <body>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                crossorigin="anonymous"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                crossorigin="anonymous"></script>
+            <div class="row">
+                <div class="col-8">
+                    <h3>個人專案資料:</h3>
+                </div>
+                <div class="col"></div>
+                <div class="col-3">
+                    <%if(data[0].apply_in == 1) {%>
+                        <h3>指導老師:</h3>
+                        <%}%>
+                </div>
+            </div>
+            <div class="w-100"></div>
+            <div class="row">
+                <div class="col-3">
+                    <div class="card-group">
+                        <div class="card">
+                            <img class="card-img-top" src="/images/stu_01.png" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">ID:
+                                    <%= data[0].member01 %>
+                                </h5>
+                                <p class="card-text">
+                                    暱稱:
+                                    <%= data[0].nickname01 %>
+                                </p>
+                                <p class="card-text">
+                                    <small class="text-muted">學校:NCU</small>
+                                </p>
+                            </div>
+                        </div>
+                        <!-- <div class="card">
+                            <img class="card-img-top" src="/images/stu_03.png" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">ID:
+                                    <%= data[0].member02 %>
+                                </h5>
+                                <p class="card-text">
+                                        暱稱:<%= data[0].nickname02 %>
+                                </p>
+                                <p class="card-text">
+                                    <small class="text-muted">學校:NCU</small>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <img class="card-img-top" src="/images/stu_02.png" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">ID:
+                                    <%= data[0].member03 %>
+                                </h5>
+                                <p class="card-text">
+                                    暱稱:<%= data[0].nickname03 %>
+                                </p>
+                                <p class="card-text">
+                                    <small class="text-muted">學校:NCU</small>
+                                </p>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="col"></div>
+                <div class="col-3">
+                    <% if (data[0].apply_in == 0) { %>
+                        <span>邀請教師指導專案</span>
+                        <select name="T_id" class="custom-select" id="sel_tea">
+                            <% if (tea_info.length == 0){ %>
+                                <option disabled>目前沒有老師可以選</option>
+                                <% }else{%>
+                                    <option value="" disabled selected>請選擇...</option>
+                                    <% for (var i=0; i<tea_info.length; i++) { %>
+                                        <option value="<%=tea_info[i].user_id %>">
+                                            <%= tea_info[i].nickname %>(ID:
+                                                <%=tea_info[i].user_id %>)學校:
+                                                    <%=tea_info[i].school %>
+                                        </option>
+                                        <% } %>
+                                            <%}%>
+                        </select>
+                        <button id="invite_tea" type="button" class="btn btn-info">邀請</button>
+                        <%}else{%>
+                            <div class="card">
+                                <img class="card-img-top" src="/images/teacher.png" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title">狀態:
+                                        <%= data[0].stage %>
+                                    </h5>
+                                    <p class="card-text">
+                                        暱稱:
+                                        <%= tea_info[0].nickname %>
+                                    </p>
+                                    <p class="card-text">
+                                        <small class="text-muted">學校:NCU</small>
+                                    </p>
+                                </div>
+                            </div>
+                            <%}%>
+                </div>
+                <div id="footer">&copy;吳穎沺老師網路與科學學習研究團隊 Copyright© 2018</div>
+                <script>
+                    $(function () {
+                        $("#invite_tea").click(function () {
+                            var sel_tea = $('#sel_tea').val();
+                            var url = window.location.toString(); //取得當前網址
+                            var str = ""; //參數中等號左邊的值
+                            var str_value = ""; //參數中等號右邊的值
+
+                            if (url.indexOf("?") != -1) {
+                                //如果網址有"?"符號
+                                var ary = url.split("?")[1].split("&");
+                                //取得"?"右邊網址後利用"&"分割字串存入ary陣列 ["a=1","b=2","c=3"]
+                                for (var i in ary) {
+                                    //取得陣列長度去跑迴圈，如:網址有三個參數，則會跑三次
+                                    str = ary[i].split("=")[0];
+                                    //取得參數"="左邊的值存入str變數中
+                                    if (str == "p_id") {
+                                        //若str等於想要抓取參數 如:b
+                                        str_value = decodeURI(ary[i].split("=")[1]);
+                                        //取得b等號右邊的值並經過中文轉碼後存入str_value
+                                    }
+                                }
+                            }
+                            console.log(sel_tea)
+                            $.ajax({
+                                url: '/controller',
+                                type: "POST",
+                                data: {
+                                    action: "invite_teacher",
+                                    sel_tea: sel_tea,
+                                    p_id: str_value,
+                                },
+                                success: function (data) {
+                                    location.reload();
+                                    alert(data);
+                                }
+                            })
+                        })
+                    })
+                </script>
+        </body>
+
+</html>
