@@ -58,14 +58,11 @@ router.post('/', function (req, res) {  //按登入系統鈕
       res.redirect('teacherPage');  //開啟管理頁面
     } else if (results[0].user_identity == 's') {  //帳號及密碼皆正確
       req.session.user_id = user_id;  //設定session
-      messages = ""
-      res.redirect('project_Select');  //開啟群組頁面
-    } else {
-      req.session.user_id = user_id;  //設定session
       req.session.nickname = results[0].nickname;
       console.log(req.session.nickname);
-      res.redirect('project_Select');  //開啟學生頁面
-    }
+      messages = ""
+      res.redirect('project_Select');  //開啟群組頁面
+    } 
   });
 });
 
